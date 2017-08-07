@@ -1,0 +1,58 @@
+﻿<Window x:Class="NotesGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NotesGenerator"
+        xmlns:vms="clr-namespace:NotesGenerator.VMs"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="630.842" MinHeight="550" Width="471.795" MinWidth="420" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" Closing="Window_Closing">
+    <Window.Resources>
+        <local:InverseBooleanConverter x:Key="InvBool"/>
+    </Window.Resources>
+    <Grid>
+        <TextBox x:Name="TitleT" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Height="23" Margin="10,36,90,0" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+        <Label Content="タイトル" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="SongPathT" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Height="23" Margin="10,95,190,0" TextWrapping="NoWrap" VerticalAlignment="Top" IsReadOnly="True"/>
+        <Label Content="音楽" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="SongRefB" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Content="ファイルを参照" HorizontalAlignment="Right" Margin="0,95,10,0" VerticalAlignment="Top" Width="175" Height="23" Click="SongRefB_Click"/>
+        <Label Content="BPM" HorizontalAlignment="Right" Margin="0,10,51,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="BPMT" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Height="23" Margin="0,36,10,0" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="ExportB" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Content="保存" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="85" Height="24" Click="ExportB_Click"/>
+        <Button x:Name="LoadB" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Content="読み込み" HorizontalAlignment="Right" Margin="0,0,10,39" VerticalAlignment="Bottom" Width="85" Height="24" Click="LoadB_Click"/>
+        <Grid x:Name="TempoParent" Margin="0,195,0,0" Height="132" VerticalAlignment="Top" HorizontalAlignment="Center" Width="392">
+            <Label x:Name="Fb" Content="F" HorizontalAlignment="Left" FontSize="30" Margin="10,23,0,0" VerticalAlignment="Top" Width="70" Height="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseLeftButtonDown="Fb_MouseLeftButtonDown" MouseLeftButtonUp="Fb_MouseLeftButtonUp" Background="#FFDEDEDE"/>
+            <Label x:Name="Gb" Content="G" HorizontalAlignment="Left" FontSize="30" Margin="85,23,0,0" VerticalAlignment="Top" Width="70" Height="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseLeftButtonDown="Fb_MouseLeftButtonDown" MouseLeftButtonUp="Fb_MouseLeftButtonUp" Background="#FFDEDEDE"/>
+            <Label x:Name="Hb" Content="H" HorizontalAlignment="Left" FontSize="30" Margin="160,23,0,0" VerticalAlignment="Top" Width="70" Height="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseLeftButtonDown="Fb_MouseLeftButtonDown" MouseLeftButtonUp="Fb_MouseLeftButtonUp" Background="#FFDEDEDE"/>
+            <Label x:Name="Jb" Content="J" HorizontalAlignment="Left" FontSize="30" Margin="235,23,0,0" VerticalAlignment="Top" Width="70" Height="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseLeftButtonDown="Fb_MouseLeftButtonDown" MouseLeftButtonUp="Fb_MouseLeftButtonUp" Background="#FFDEDEDE"/>
+            <Label x:Name="Kb" Content="K" HorizontalAlignment="Left" FontSize="30" Margin="310,23,0,0" VerticalAlignment="Top" Width="70" Height="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseLeftButtonDown="Fb_MouseLeftButtonDown" MouseLeftButtonUp="Fb_MouseLeftButtonUp" Background="#FFDEDEDE"/>
+            <Rectangle x:Name="Fr" Fill="White" HorizontalAlignment="Left" Height="16" Margin="10,2,0,0" Stroke="Black" VerticalAlignment="Top" Width="70"/>
+            <Rectangle x:Name="Gr" Fill="White" HorizontalAlignment="Left" Height="16" Margin="85,2,0,0" Stroke="Black" VerticalAlignment="Top" Width="70"/>
+            <Rectangle x:Name="Hr" Fill="White" HorizontalAlignment="Left" Height="16" Margin="160,2,0,0" Stroke="Black" VerticalAlignment="Top" Width="70"/>
+            <Rectangle x:Name="Jr" Fill="White" HorizontalAlignment="Left" Height="16" Margin="235,2,0,0" Stroke="Black" VerticalAlignment="Top" Width="70"/>
+            <Rectangle x:Name="Kr" Fill="White" HorizontalAlignment="Left" Height="16" Margin="310,2,0,0" Stroke="Black" VerticalAlignment="Top" Width="70"/>
+            <Button x:Name="RecordB" IsEnabled="{Binding Recording.Value, Converter={StaticResource InvBool}}" Content="記録開始" HorizontalAlignment="Left" Margin="10,98,0,7" Width="130" Click="RecordB_Click"/>
+            <Button x:Name="StopRecordB" IsEnabled="{Binding Recording.Value}" Content="停止" HorizontalAlignment="Right" Margin="0,98,12,7" Width="130" Click="StopRecordB_Click"/>
+        </Grid>
+        <Slider x:Name="SeekBarS" Margin="10,133,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ValueChanged="SeekBarS_ValueChanged"/>
+        <Label x:Name="PosL" Content="00:00" HorizontalAlignment="Right" Margin="0,133,10,0" VerticalAlignment="Top"/>
+        <Button x:Name="PPB" Content="再生/一時停止" HorizontalAlignment="Right" Margin="0,236,10,0" VerticalAlignment="Top" Width="119" Height="26" Click="PPB_Click" Visibility="Collapsed"/>
+        <ListView Margin="10,332,10,68" ItemsSource="{Binding TempNotes}" SelectionChanged="ListView_SelectionChanged">
+            <ListView.ContextMenu>
+                <ContextMenu x:Name="NotesMenu">
+                    <MenuItem IsEnabled="False" x:Name="RemoveNoteItem" Header="削除" Click="RemoveNoteItem_Click"/>
+                    <MenuItem IsEnabled="False" x:Name="PreviewNoteItem" Header="プレビュー" Click="PreviewNoteItem_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="レーン番号" Width="100" DisplayMemberBinding="{Binding Lane}"/>
+                    <GridViewColumn Header="時間[ms]" Width="200" DisplayMemberBinding="{Binding StartingTime.TotalMilliseconds}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Slider x:Name="PRateS" Margin="10,164,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Maximum="3" Minimum="0.1" Value="1" ValueChanged="PRateS_ValueChanged"/>
+        <Label Content="{Binding ElementName=PRateS, Path=Value}" Margin="0,164,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" HorizontalContentAlignment="Center"/>
+        <Button x:Name="PreviewB" Content="プレビュー開始/停止" HorizontalAlignment="Left" Margin="10,0,0,39" VerticalAlignment="Bottom" Width="145" Height="24" Click="PreviewB_Click"/>
+    </Grid>
+</Window>
