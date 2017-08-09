@@ -28,7 +28,7 @@ namespace NotesGenerator
             Clipboard.SetText(stacktrace);
             e.Handled = true;
 
-            App.Current.Shutdown(-1);
+            Current.Shutdown(-1);
         }
     }
 }

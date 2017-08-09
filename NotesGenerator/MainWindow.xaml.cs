@@ -22,7 +22,6 @@ using SugaEngine;
 using SugaEngine.Export;
 using Reactive.Bindings;
 
-
 namespace NotesGenerator
 {
     /// <summary>
@@ -117,11 +116,7 @@ namespace NotesGenerator
                 {
                     if (Preview.Value)
                     {
-                        Fr.Fill = Brushes.White;
-                        Gr.Fill = Brushes.White;
-                        Hr.Fill = Brushes.White;
-                        Jr.Fill = Brushes.White;
-                        Kr.Fill = Brushes.White;
+                        ClearTempoFill();
                         TimeSpan pos = Player.Position;
                         TimeSpan range = TimeSpan.FromMilliseconds(50);
                         if (Preview.Value)
@@ -140,6 +135,18 @@ namespace NotesGenerator
                         }
                     }
                 }), Dispatcher);
+
+            Preview.PropertyChanged += (sender, e) => ClearTempoFill();
+            Recording.PropertyChanged += (sender, e) => ClearTempoFill();
+        }
+
+        private void ClearTempoFill()
+        {
+            Fr.Fill = Brushes.White;
+            Gr.Fill = Brushes.White;
+            Hr.Fill = Brushes.White;
+            Jr.Fill = Brushes.White;
+            Kr.Fill = Brushes.White;
         }
 
         private void ExportB_Click(object sender, RoutedEventArgs e)
