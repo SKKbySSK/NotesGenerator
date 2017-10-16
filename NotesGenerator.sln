@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotesGenerator", "NotesGenerator\NotesGenerator.csproj", "{385A9F61-7213-4850-9CB3-FDDEE8885710}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SugaEngine", "SugaEngine\SugaEngine.csproj", "{AA3AB81B-FD9D-47BB-A487-923B66BF4E53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotesPreviewer", "NotesPreviewer\NotesPreviewer.csproj", "{A8F052DA-CC4A-4C55-B7AC-6894E1D2780C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotesPlayer", "NotesPlayer\NotesPlayer.csproj", "{1060809C-DD35-485B-BA39-594C276FEBF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +25,19 @@ Global
 		{AA3AB81B-FD9D-47BB-A487-923B66BF4E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA3AB81B-FD9D-47BB-A487-923B66BF4E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA3AB81B-FD9D-47BB-A487-923B66BF4E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8F052DA-CC4A-4C55-B7AC-6894E1D2780C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8F052DA-CC4A-4C55-B7AC-6894E1D2780C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8F052DA-CC4A-4C55-B7AC-6894E1D2780C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8F052DA-CC4A-4C55-B7AC-6894E1D2780C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1060809C-DD35-485B-BA39-594C276FEBF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1060809C-DD35-485B-BA39-594C276FEBF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1060809C-DD35-485B-BA39-594C276FEBF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1060809C-DD35-485B-BA39-594C276FEBF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CE2DEA3-A005-43B0-83C7-A3EDCCC8ED3A}
 	EndGlobalSection
 EndGlobal

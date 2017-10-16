@@ -15,6 +15,15 @@ namespace SugaEngine
     public class Note
     {
         public Note() { }
+
+        public Note(Note Base)
+        {
+            Mode = Base.Mode;
+            StartingTime = Base.StartingTime;
+            EndingTime = Base.EndingTime;
+            Lane = Base.Lane;
+        }
+
         private Note(NoteMode Mode, TimeSpan Start, TimeSpan End, int Lane)
         {
             this.Mode = Mode;

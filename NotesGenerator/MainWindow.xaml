@@ -61,5 +61,6 @@
         <Slider x:Name="PRateS" Margin="10,164,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Maximum="3" Minimum="0.1" Value="1" ValueChanged="PRateS_ValueChanged"/>
         <Label Content="{Binding ElementName=PRateS, Path=Value}" Margin="0,164,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" HorizontalContentAlignment="Center"/>
         <Button x:Name="PreviewB" Content="プレビュー開始/停止" HorizontalAlignment="Left" Margin="10,0,0,39" VerticalAlignment="Bottom" Width="145" Height="24" Click="PreviewB_Click"/>
+        <Button x:Name="UsePreviewerB" Content="高度なプレビュー" HorizontalAlignment="Left" Margin="160,0,0,39" VerticalAlignment="Bottom" Width="133" Height="24" Click="UsePreviewerB_Click"/>
     </Grid>
 </Window>

@@ -20,6 +20,18 @@ namespace SugaEngine
             this.Notes = Notes;
         }
 
+        public Music(Music Base)
+        {
+            Title = Base.Title;
+            BPM = Base.BPM;
+            Delay = Base.Delay;
+            Notes = new List<Note>();
+            foreach(Note note in Base.Notes)
+                Notes.Add(new Note(note));
+
+            Song = Base.Song;
+        }
+
         public string Title { get; set; }
         public int BPM { get; set; }
         public int Delay { get; set; } = 0;

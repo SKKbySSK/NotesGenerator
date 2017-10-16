@@ -1,6 +1,4 @@
-﻿//#define NOTIME
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,6 +19,7 @@ using System.IO;
 using SugaEngine;
 using SugaEngine.Export;
 using Reactive.Bindings;
+using NAudio.Wave;
 
 namespace NotesGenerator
 {
@@ -47,6 +46,8 @@ namespace NotesGenerator
 
         private bool SetSong(string Path)
         {
+            Preview.Value = false;
+            Recording.Value = false;
             if(Player != null)
             {
                 Player.PlaybackStateChanged -= Player_PlaybackStateChanged;
@@ -59,7 +60,11 @@ namespace NotesGenerator
                 _song = Path;
                 if (!string.IsNullOrEmpty(_song))
                 {
-                    Player = new MusicPlayer(_song);
+                    if (Args.UseDirectSound)
+                        Player = new MusicPlayer(_song, new DirectSoundOut(MusicPlayer.Latency));
+                    else
+                        Player = new MusicPlayer(_song);
+
                     Player.PlaybackStateChanged += Player_PlaybackStateChanged;
                     Player.Rate = (float)PRateS.Value;
                     SeekBarS.Maximum = Player.Duration.TotalMilliseconds;
@@ -72,10 +77,6 @@ namespace NotesGenerator
                 System.Windows.Forms.MessageBox.Show("音楽ファイルの読み込み、または再生デバイスの初期化に失敗しました。" +
                     "\nmp3ファイルまたはsgsongファイルであることを確認してください。" +
                     "\nまたはWASAPI排他モードを利用するソフトがある場合はそのソフトを閉じてから読み込んでください(foobar2000等)");
-
-#if NOTIME
-                throw;
-#endif
 
                 return false;
             }
@@ -454,6 +455,21 @@ namespace NotesGenerator
             DisableControls.Value = Preview.Value;
             Recording.Value = false;
             Player.Play();
+        }
+
+        private void UsePreviewerB_Click(object sender, RoutedEventArgs e)
+        {
+            string path = SongPath;
+            SetSong(null);
+
+            Music music = new Music();
+            music.Title = "Temporary";
+            music.Notes = TempNotes;
+            Notes.Serialize(music, path, "Temp");
+
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("NotesPreviewer.exe", @"temp\" + music.Title + ".sgsong")).WaitForExit();
+
+            SetSong(path);
         }
     }
 

@@ -9,23 +9,29 @@ using NAudio.Wave.SampleProviders;
 
 namespace NotesGenerator
 {
-    class MusicPlayer : IDisposable
+    public class MusicPlayer : IDisposable
     {
         public event EventHandler PlaybackStateChanged;
 
-        private const int Latency = 50;
+        public const int Latency = 50;
+
         private MediaFoundationReader reader;
-        private WasapiOut wasapi = new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, Latency);
+        private IWavePlayer output;
         private SoundTouch.VarispeedSampleProvider speed;
 
-        public MusicPlayer(string Path)
+        public MusicPlayer(string Path) : this(Path, new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, Latency))
         {
+        }
+
+        public MusicPlayer(string Path, IWavePlayer Player)
+        {
+            output = new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, Latency);
             reader = new MediaFoundationReader(Path);
 
             speed = new SoundTouch.VarispeedSampleProvider(new SampleChannel(reader), Latency, new SoundTouch.SoundTouchProfile(false, true));
             speed.PlaybackRate = 0.4f;
-            wasapi.Init(speed);
-            wasapi.PlaybackStopped += Wasapi_PlaybackStopped;
+            output.Init(speed);
+            output.PlaybackStopped += Wasapi_PlaybackStopped;
         }
 
         private void Wasapi_PlaybackStopped(object sender, StoppedEventArgs e)
@@ -35,20 +41,20 @@ namespace NotesGenerator
 
         public void Play()
         {
-            wasapi.Play();
+            output.Play();
             PlaybackStateChanged?.Invoke(this, new EventArgs());
         }
 
         public void Pause()
         {
-            wasapi.Pause();
+            output.Pause();
             PlaybackStateChanged?.Invoke(this, new EventArgs());
         }
 
         public void Dispose()
         {
             reader.Dispose();
-            wasapi.Dispose();
+            output.Dispose();
             speed.Dispose();
         }
 
@@ -71,7 +77,7 @@ namespace NotesGenerator
 
         public PlaybackState State
         {
-            get { return wasapi.PlaybackState; }
+            get { return output.PlaybackState; }
         }
     }
 }

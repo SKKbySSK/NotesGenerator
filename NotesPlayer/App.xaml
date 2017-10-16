@@ -1,0 +1,12 @@
+﻿<Application x:Class="NotesPlayer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:NotesPlayer"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="LaneBorderBrush" Color="White"/>
+        <SolidColorBrush x:Key="LaneFillBrush" Color="#b2b2b2"/>
+        <Thickness x:Key="LaneStrokeThickness">10</Thickness>
+    </Application.Resources>
+</Application>
