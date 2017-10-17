@@ -62,5 +62,6 @@
         <Label Content="{Binding ElementName=PRateS, Path=Value}" Margin="0,164,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" HorizontalContentAlignment="Center"/>
         <Button x:Name="PreviewB" Content="プレビュー開始/停止" HorizontalAlignment="Left" Margin="10,0,0,39" VerticalAlignment="Bottom" Width="145" Height="24" Click="PreviewB_Click"/>
         <Button x:Name="UsePreviewerB" Content="高度なプレビュー" HorizontalAlignment="Left" Margin="160,0,0,39" VerticalAlignment="Bottom" Width="133" Height="24" Click="UsePreviewerB_Click"/>
+        <Button x:Name="ChartB" Content="波形表示" HorizontalAlignment="Left" Margin="298,0,0,39" VerticalAlignment="Bottom" Width="109" Height="24" Click="ChartB_Click"/>
     </Grid>
 </Window>

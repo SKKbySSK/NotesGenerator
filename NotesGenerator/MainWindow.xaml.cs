@@ -471,6 +471,51 @@ namespace NotesGenerator
 
             SetSong(path);
         }
+
+        private void ChartB_Click(object sender, RoutedEventArgs e)
+        {
+            if(Player != null && Player.State == PlaybackState.Playing)
+            {
+                Form form = new Form();
+                System.Windows.Forms.DataVisualization.Charting.Chart chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+                chart.Anchor = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Top;
+                chart.ChartAreas.Add("FFT");
+                chart.ChartAreas["FFT"].AxisX.Title = "Frequency[Hz]";
+                chart.ChartAreas["FFT"].AxisX.Minimum = 0;
+                chart.ChartAreas["FFT"].AxisY.Title = "Magnitude";
+                chart.ChartAreas["FFT"].AxisY.Maximum = 10;
+
+                System.Windows.Forms.DataVisualization.Charting.Series series = new System.Windows.Forms.DataVisualization.Charting.Series();
+                series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                series.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.None;
+
+                int count = Player.NumberOfFftSamples / 4;
+                double max = 0, bfreq = (Player.WaveFormat.SampleRate / 2) / count;
+                Player.FftFinished += (_, fft) =>
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        series.Points.Clear();
+
+                        for (int i = 0; count > i; i++)
+                        {
+                            double mag = fft.Samples[i].Magnitude;
+
+                            if (mag > max)
+                            {
+                                max = mag;
+                            }
+
+                            series.Points.AddXY(i * bfreq, mag);
+                        }
+                    }));
+                };
+
+                chart.Series.Add(series);
+                form.Controls.Add(chart);
+                form.ShowDialog();
+            }
+        }
     }
 
     [ValueConversion(typeof(bool), typeof(bool))]
