@@ -29,11 +29,11 @@ namespace NotesGenerator
 
         public MusicPlayer(string Path, IWavePlayer Player)
         {
-            output = new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, Latency);
+            output = Player;
             reader = new MediaFoundationReader(Path);
-
-            BiQuadFilter lowpass = BiQuadFilter.LowPassFilter(reader.WaveFormat.SampleRate, 900, 1);
-            Equalizer eq = new Equalizer(new SampleChannel(reader)) { Filter = lowpass };
+            
+            Equalizer eq = new Equalizer(new SampleChannel(reader));
+            eq.Enabled = false;
 
             fft = new FFT.SampleProvider(eq);
             fft.FftFinished += Fft_FftFinished;

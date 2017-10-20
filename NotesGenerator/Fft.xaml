@@ -5,11 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotesGenerator"
         mc:Ignorable="d"
-        Title="Fft" Height="300" Width="300">
+        Title="Fft" Height="332.231" Width="394.215" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="BeginB" Content="開始" Margin="0,0,10.286,9.429" HorizontalAlignment="Right" Width="95" Height="27" VerticalAlignment="Bottom" Click="BeginB_Click"/>
         <ProgressBar x:Name="ProgressB" Height="26" Margin="10,0,110.286,10.429" VerticalAlignment="Bottom"/>
-        <Slider x:Name="TakeS" Margin="10,10,10.286,0" VerticalAlignment="Top"/>
+        <Slider x:Name="TakeS" Margin="10,62,10,0" VerticalAlignment="Top" Maximum="1" LargeChange="0.2" Value="0.3" SmallChange="0.02" TickFrequency="0.1" Minimum="0.01"/>
+        <Label Content="周波数パラメータ" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+        <Label Content="FFT開始時間" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="FftBeginS" Margin="10,106,10,0" VerticalAlignment="Top" Value="2"/>
+        <Label Content="{Binding ElementName=FftBeginS, Path=Value}" ContentStringFormat="{}{0}秒" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,80,10,0" VerticalAlignment="Top" Width="95"/>
+        <Label Content="{Binding Value, ElementName=TakeS}" ContentStringFormat="{}{0:P0}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,36,10,0" VerticalAlignment="Top" Width="95"/>
+        <CheckBox x:Name="LowPassC" Content="ローパスフィルター" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
 
     </Grid>
 </Window>

@@ -8,6 +8,6 @@ namespace NotesGenerator
 {
     static class Args
     {
-        public static bool UseDirectSound { get; set; } = false;
+        public static bool UseNullOut { get; set; } = false;
     }
 }

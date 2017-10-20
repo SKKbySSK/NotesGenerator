@@ -30,6 +30,7 @@ namespace NotesGenerator
     {
         public ObservableCollection<Note> TempNotes { get; } = new ObservableCollection<Note>();
         private List<Note> SelectedNotes { get; } = new List<Note>();
+        private Form GraphForm { get; set; }
 
         public ReactiveProperty<bool> DisableControls { get; } = new ReactiveProperty<bool>(false);
         public ReactiveProperty<bool> Recording { get; } = new ReactiveProperty<bool>(false);
@@ -48,7 +49,9 @@ namespace NotesGenerator
         {
             Preview.Value = false;
             Recording.Value = false;
-            if(Player != null)
+            GraphForm?.Close();
+            GraphForm = null;
+            if (Player != null)
             {
                 Player.PlaybackStateChanged -= Player_PlaybackStateChanged;
                 Player.Dispose();
@@ -60,8 +63,8 @@ namespace NotesGenerator
                 _song = Path;
                 if (!string.IsNullOrEmpty(_song))
                 {
-                    if (Args.UseDirectSound)
-                        Player = new MusicPlayer(_song, new DirectSoundOut(MusicPlayer.Latency));
+                    if (Args.UseNullOut)
+                        Player = new MusicPlayer(_song, new AsyncNullOut());
                     else
                         Player = new MusicPlayer(_song);
 
@@ -90,6 +93,8 @@ namespace NotesGenerator
                 case NAudio.Wave.PlaybackState.Stopped:
                     Preview.Value = false;
                     Recording.Value = false;
+                    GraphForm?.Close();
+                    GraphForm = null;
                     break;
             }
         }
@@ -190,11 +195,19 @@ namespace NotesGenerator
 
         private void SongRefB_Click(object sender, RoutedEventArgs e)
         {
+            if(TempNotes.Count > 0)
+            {
+                if (System.Windows.MessageBox.Show("まだ作業中のデータがありますが続行しますか？" +
+                    "\n未保存のデータは削除されます",
+                    "警告", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    return;
+            }
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "音楽ファイル|*.mp3;*.wav;*.flac;*.m4a";
             ofd.FileName = "";
             if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                TempNotes.Clear();
                 if (!SetSong(ofd.FileName))
                     return;
 
@@ -474,46 +487,82 @@ namespace NotesGenerator
 
         private void ChartB_Click(object sender, RoutedEventArgs e)
         {
-            if(Player != null && Player.State == PlaybackState.Playing)
+            if(Player != null)
             {
                 Form form = new Form();
                 System.Windows.Forms.DataVisualization.Charting.Chart chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
                 chart.Anchor = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Top;
-                chart.ChartAreas.Add("FFT");
-                chart.ChartAreas["FFT"].AxisX.Title = "Frequency[Hz]";
-                chart.ChartAreas["FFT"].AxisX.Minimum = 0;
-                chart.ChartAreas["FFT"].AxisY.Title = "Magnitude";
-                chart.ChartAreas["FFT"].AxisY.Maximum = 10;
 
-                System.Windows.Forms.DataVisualization.Charting.Series series = new System.Windows.Forms.DataVisualization.Charting.Series();
-                series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-                series.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.None;
-
-                int count = Player.NumberOfFftSamples / 4;
-                double max = 0, bfreq = Player.WaveFormat.SampleRate / count;
-                Player.FftFinished += (_, fft) =>
                 {
-                    Dispatcher.BeginInvoke(new Action(() =>
+                    var fftc = chart.ChartAreas.Add("FFT");
+                    fftc.AxisX.Title = "Frequency[Hz]";
+                    fftc.AxisX.Minimum = 0;
+                    fftc.AxisY.Title = "Magnitude";
+                    fftc.AxisY.Maximum = 15;
+
+                    System.Windows.Forms.DataVisualization.Charting.Series fftseries = new System.Windows.Forms.DataVisualization.Charting.Series();
+                    fftseries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                    fftseries.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.None;
+                    fftseries.ChartArea = "FFT";
+
+                    var avc = chart.ChartAreas.Add("Average");
+                    avc.AxisX.Maximum = 1;
+                    avc.AxisY.Maximum = 15;
+
+                    System.Windows.Forms.DataVisualization.Charting.Series avseries = new System.Windows.Forms.DataVisualization.Charting.Series();
+                    avseries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+                    avseries.ChartArea = "Average";
+
+                    int count = Player.NumberOfFftSamples / 4;
+                    double max = 0, bfreq = Player.WaveFormat.SampleRate / 2 / count;
+
+                    EventHandler<FFT.FourierEventArgs> ev = (_, fft) =>
                     {
-                        series.Points.Clear();
-
-                        for (int i = 1; count >= i; i++)
+                        Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            double mag = fft.Samples[i - 1].Magnitude;
-
-                            if (mag > max)
+                            if (fftseries != null && fftseries.Points != null)
                             {
-                                max = mag;
+                                fftseries.Points.Clear();
+
+                                double av = 0;
+                                for (int i = 1; count >= i; i++)
+                                {
+                                    double mag = fft.Samples[i - 1].Magnitude;
+
+                                    if (mag > max)
+                                    {
+                                        max = mag;
+                                    }
+
+                                    fftseries.Points.AddXY(i * bfreq, mag);
+                                    av += mag;
+                                }
+                                av /= count;
+                                avseries.Points.Clear();
+                                avseries.Points.AddXY(1, av);
                             }
+                        }));
+                    };
 
-                            series.Points.AddXY(i * bfreq, mag);
-                        }
-                    }));
-                };
+                    Player.FftFinished += ev;
 
-                chart.Series.Add(series);
+                    chart.Series.Add(fftseries);
+                    chart.Series.Add(avseries);
+
+                    form.FormClosed += (_, _2) =>
+                    {
+                        if (Player != null) Player.FftFinished -= ev;
+                        GraphForm = null;
+                        ChartB.IsEnabled = true;
+                    };
+                }
+                
                 form.Controls.Add(chart);
-                form.ShowDialog();
+
+                GraphForm = form;
+                ChartB.IsEnabled = false;
+                form.Size = new System.Drawing.Size(400, 400);
+                form.Show();
             }
         }
 
@@ -521,6 +570,11 @@ namespace NotesGenerator
         {
             Fft window = new Fft(_song, TempNotes);
             window.Show();
+        }
+
+        private void ResetRateB_Click(object sender, RoutedEventArgs e)
+        {
+            PRateS.Value = 1;
         }
     }
 

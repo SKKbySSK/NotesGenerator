@@ -27,8 +27,8 @@ namespace NotesGenerator
             {
                 switch (arg)
                 {
-                    case "DSOut":
-                        NotesGenerator.Args.UseDirectSound = true;
+                    case "NullOut":
+                        NotesGenerator.Args.UseNullOut = true;
                         break;
                 }
             }
