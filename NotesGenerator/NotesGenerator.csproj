@@ -94,6 +94,9 @@
     </ApplicationDefinition>
     <Compile Include="Args.cs" />
     <Compile Include="FFT\SampleProvider.cs" />
+    <Compile Include="FourierDialog.xaml.cs">
+      <DependentUpon>FourierDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SoundTouch\SoundTouch.cs" />
     <Compile Include="SoundTouch\SoundTouchInterop32.cs" />
     <Compile Include="SoundTouch\SoundTouchInterop64.cs" />
@@ -101,6 +104,10 @@
     <Compile Include="SoundTouch\SoundTouchSettings.cs" />
     <Compile Include="SoundTouch\VarispeedSampleProvider.cs" />
     <Compile Include="VMs\NotesLVVM.cs" />
+    <Page Include="FourierDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
