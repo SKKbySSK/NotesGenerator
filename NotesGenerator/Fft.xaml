@@ -1,0 +1,15 @@
+﻿<Window x:Class="NotesGenerator.Fft"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NotesGenerator"
+        mc:Ignorable="d"
+        Title="Fft" Height="300" Width="300">
+    <Grid>
+        <Button x:Name="BeginB" Content="開始" Margin="0,0,10.286,9.429" HorizontalAlignment="Right" Width="95" Height="27" VerticalAlignment="Bottom" Click="BeginB_Click"/>
+        <ProgressBar x:Name="ProgressB" Height="26" Margin="10,0,110.286,10.429" VerticalAlignment="Bottom"/>
+        <Slider x:Name="TakeS" Margin="10,10,10.286,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

@@ -4,63 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NAudio.Wave;
-using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.IntegralTransforms;
 using MathNet.Numerics;
 
 namespace NotesGenerator.FFT
 {
-    public class FourierEventArgs : EventArgs
+    class SyncSampleProvider : ISampleProvider
     {
-        public FourierEventArgs(System.Numerics.Complex[] Samples, FourierOptions AppliedOptions)
+        ISampleProvider prov;
+        public SyncSampleProvider(ISampleProvider SampleProvider)
         {
-            this.Samples = Samples;
-            this.AppliedOptions = AppliedOptions;
-        }
-
-        public System.Numerics.Complex[] Samples { get; }
-        public FourierOptions AppliedOptions { get; }
-    }
-
-    public class SampleProvider : ISampleProvider, IDisposable
-    {
-        public event EventHandler<FourierEventArgs> FftFinished;
-
-        bool disposing = false;
-        Task FftTask;
-        ISampleProvider sampleProvider;
-
-        public SampleProvider(ISampleProvider sampleProvider)
-        {
-            this.sampleProvider = sampleProvider;
-            RunTask();
+            prov = SampleProvider;
         }
 
         public int NumberOfSamples { get; set; } = 1024;
         public int ReduceCount { get; set; } = 1000;
-
-        void RunTask()
-        {
-            FftTask = Task.Run(() =>
-            {
-                int red = 0;
-                while (!disposing)
-                {
-                    if(red < ReduceCount)
-                    {
-                        red++;
-                    }
-                    else
-                    {
-                        red = 0;
-                        lock (FftQueue)
-                        {
-                            ComputeFFT();
-                        }
-                    }
-                }
-            });
-        }
+        public event EventHandler<FourierEventArgs> FftFinished;
 
         void ComputeFFT()
         {
@@ -85,6 +44,7 @@ namespace NotesGenerator.FFT
                 {
                     while (index + 1 < NumberOfSamples)
                     {
+                        if (FftQueue.Count == 0) break;
                         float[] array = FftQueue.Dequeue();
                         double[] hamming = Window.Hamming(array.Length);
 
@@ -117,25 +77,26 @@ namespace NotesGenerator.FFT
 
         public WaveFormat WaveFormat
         {
-            get { return sampleProvider.WaveFormat; }
+            get { return prov.WaveFormat; }
         }
 
         public int Read(float[] buffer, int offset, int count)
         {
-            lock (FftQueue)
+            int read = prov.Read(buffer, offset, count);
+            int fftc = 0;
+            foreach (var fft in FftQueue)
+                fftc += fft.Length;
+
+            fftc += count;
+            FftQueue.Enqueue(buffer.Take(read).ToArray());
+
+            int len = LeftOver == null ? 0 : LeftOver.Length;
+            if(fftc + len >= NumberOfSamples)
             {
-                float[] buf = new float[count];
-                Array.Copy(buffer, offset, buf, 0, count);
-                FftQueue.Enqueue(buf);
+                ComputeFFT();
             }
 
-            return sampleProvider.Read(buffer, offset, count);
-        }
-
-        public void Dispose()
-        {
-            disposing = true;
-            FftTask.Wait();
+            return read;
         }
     }
 }
