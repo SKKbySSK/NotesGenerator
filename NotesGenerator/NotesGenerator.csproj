@@ -93,7 +93,14 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Compile Include="Args.cs" />
+    <Compile Include="Fft.xaml.cs">
+      <DependentUpon>Fft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FFT\Generator.cs" />
     <Compile Include="FFT\SampleProvider.cs" />
+    <Compile Include="FFT\SyncSampleProvider.cs" />
+    <Compile Include="NAudio\Equalizer.cs" />
+    <Compile Include="NAudio\NullOut.cs" />
     <Compile Include="SoundTouch\SoundTouch.cs" />
     <Compile Include="SoundTouch\SoundTouchInterop32.cs" />
     <Compile Include="SoundTouch\SoundTouchInterop64.cs" />
@@ -101,6 +108,10 @@
     <Compile Include="SoundTouch\SoundTouchSettings.cs" />
     <Compile Include="SoundTouch\VarispeedSampleProvider.cs" />
     <Compile Include="VMs\NotesLVVM.cs" />
+    <Page Include="Fft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -490,16 +490,16 @@ namespace NotesGenerator
                 series.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.None;
 
                 int count = Player.NumberOfFftSamples / 4;
-                double max = 0, bfreq = (Player.WaveFormat.SampleRate / 2) / count;
+                double max = 0, bfreq = Player.WaveFormat.SampleRate / count;
                 Player.FftFinished += (_, fft) =>
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         series.Points.Clear();
 
-                        for (int i = 0; count > i; i++)
+                        for (int i = 1; count >= i; i++)
                         {
-                            double mag = fft.Samples[i].Magnitude;
+                            double mag = fft.Samples[i - 1].Magnitude;
 
                             if (mag > max)
                             {
@@ -515,6 +515,12 @@ namespace NotesGenerator
                 form.Controls.Add(chart);
                 form.ShowDialog();
             }
+        }
+
+        private void FftB_Click(object sender, RoutedEventArgs e)
+        {
+            Fft window = new Fft(_song, TempNotes);
+            window.Show();
         }
     }
 

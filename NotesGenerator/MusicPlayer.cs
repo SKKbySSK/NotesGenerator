@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using NAudio.Dsp;
 
 namespace NotesGenerator
 {
@@ -31,7 +32,10 @@ namespace NotesGenerator
             output = new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, Latency);
             reader = new MediaFoundationReader(Path);
 
-            fft = new FFT.SampleProvider(new SampleChannel(reader));
+            BiQuadFilter lowpass = BiQuadFilter.LowPassFilter(reader.WaveFormat.SampleRate, 900, 1);
+            Equalizer eq = new Equalizer(new SampleChannel(reader)) { Filter = lowpass };
+
+            fft = new FFT.SampleProvider(eq);
             fft.FftFinished += Fft_FftFinished;
 
             speed = new SoundTouch.VarispeedSampleProvider(fft, Latency, new SoundTouch.SoundTouchProfile(false, true));

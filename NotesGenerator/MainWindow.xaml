@@ -39,6 +39,7 @@
             <Button Grid.Column="0" x:Name="StopRecordB" IsEnabled="{Binding Recording.Value}" Content="停止" HorizontalAlignment="Right" Margin="0,98,7,7" Width="130" Click="StopRecordB_Click"/>
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <Button Content="一定間隔で追加" Height="30"/>
+                <Button x:Name="FftB" Content="FFT" Height="28" Click="FftB_Click"/>
             </StackPanel>
         </Grid>
         <Slider x:Name="SeekBarS" Margin="10,133,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ValueChanged="SeekBarS_ValueChanged"/>
