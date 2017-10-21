@@ -5,8 +5,9 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <SolidColorBrush x:Key="LaneBorderBrush" Color="White"/>
-        <SolidColorBrush x:Key="LaneFillBrush" Color="#b2b2b2"/>
-        <Thickness x:Key="LaneStrokeThickness">10</Thickness>
+        <SolidColorBrush x:Key="LaneBorderBrush" Color="Black"/>
+        <SolidColorBrush x:Key="LaneFillBrush" Color="#AA000000"/>
+        <SolidColorBrush x:Key="LanePressedFillBrush" Color="#F0000000"/>
+        <system:Double x:Key="LaneStrokeThickness">2</system:Double>
     </Application.Resources>
 </Application>

@@ -23,6 +23,7 @@ namespace NotesPlayer
         public NotesDropper()
         {
             InitializeComponent();
+            Dropper.BeginKeyHook();
         }
     }
 }
