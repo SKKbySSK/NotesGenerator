@@ -25,13 +25,13 @@
 
             <ModelVisual3D >
                 <ModelVisual3D.Content>
-                    <AmbientLight Color="#FFFFFFFF"/>
+                    <DirectionalLight Color="#FFFFFFFF" Direction="0,-1,-0.4"/>
                 </ModelVisual3D.Content>
             </ModelVisual3D>
 
             <Viewport2DVisual3D Geometry="{StaticResource mGeometry}">
                 <Viewport2DVisual3D.Visual>
-                    <local:DropperView x:Name="Dropper" Width="300" Height="400"/>
+                    <local:DropperView x:Name="Dropper" Width="300" Height="500"/>
                 </Viewport2DVisual3D.Visual>
                 <Viewport2DVisual3D.Transform>
                     <RotateTransform3D CenterZ="4.3" CenterY="6">

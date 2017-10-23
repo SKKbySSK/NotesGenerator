@@ -29,7 +29,7 @@ namespace NotesGenerator
             public double Begining { get; set; } = 2;
             public double Magnitude { get; set; } = 0;
             public double Take { get; set; } = 30;
-            public double Threshold { get; set; } = 20;
+            public double Threshold { get; set; } = 5;
             public int Limit { get; set; } = 3;
             public bool UsingLowPass { get; set; } = false;
         }
@@ -38,12 +38,12 @@ namespace NotesGenerator
         string Path;
         IList<Note> Notes;
         FFT.SyncSampleProvider fftProv;
-        AudioFileReader afr;
+        MediaFoundationReader mfr;
         CalcParams cparam = new CalcParams();
 
         Queue<System.Numerics.Complex[]> CurrentComplexes = new Queue<System.Numerics.Complex[]>();
 
-        public int CalcRate { get; set; } = 20;
+        public int CalcRate { get; set; } = 4;
 
         public Fft(string Path, IList<Note> Notes)
         {
@@ -61,13 +61,14 @@ namespace NotesGenerator
 
             cparam.Take = TakeS.Value;
             cparam.Begining = FftBeginS.Value;
+            cparam.Threshold = ThreshS.Value;
             cparam.UsingLowPass = LowPassC.IsChecked ?? false;
 
-            afr = new AudioFileReader(Path);
+            mfr = new MediaFoundationReader(Path);
             ProgressB.Value = 0;
-            ProgressB.Maximum = afr.TotalTime.TotalMilliseconds;
+            ProgressB.Maximum = mfr.TotalTime.TotalMilliseconds;
             
-            Equalizer eq = new Equalizer(new SampleChannel(afr));
+            Equalizer eq = new Equalizer(new SampleChannel(mfr));
             eq.AddLowPassFilter(500, 0.1f);
             eq.Enabled = cparam.UsingLowPass;
 
@@ -85,9 +86,9 @@ namespace NotesGenerator
         
         private void FftProv_FftFinished(object sender, FFT.FourierEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() => ProgressB.Value = afr.CurrentTime.TotalMilliseconds));
+            Dispatcher.BeginInvoke(new Action(() => ProgressB.Value = mfr.CurrentTime.TotalMilliseconds));
 
-            if(afr.CurrentTime.TotalSeconds >= cparam.Begining)
+            if(mfr.CurrentTime.TotalSeconds >= cparam.Begining)
             {
                 CurrentComplexes.Enqueue(e.Samples);
 
@@ -138,7 +139,7 @@ namespace NotesGenerator
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        Notes.Add(new Note(afr.CurrentTime, new Random((int)((tmax) * 100)).Next(0, 5)));
+                        Notes.Add(new Note(mfr.CurrentTime, new Random((int)((tmax) * 100)).Next(0, 5)));
                     }));
                     return;
                 }
@@ -147,13 +148,13 @@ namespace NotesGenerator
 
         TimeSpan CalculateTime(long Position, int Difference)
         {
-            TimeSpan timeSpan = TimeSpan.FromSeconds((Position + Difference) / afr.WaveFormat.SampleRate);
+            TimeSpan timeSpan = TimeSpan.FromSeconds((Position + Difference) / mfr.WaveFormat.SampleRate);
             return timeSpan;
         }
 
         void ComputeFFTInLowPassMode(System.Numerics.Complex[][] Samples)
         {
-            double max = 0, min = -1;
+            double max = 0, sec = -1;
             int maxind = 0;
 
             int i = 0;
@@ -165,22 +166,18 @@ namespace NotesGenerator
                 double cmax = ordered.First().Magnitude;
                 if (cmax > max)
                 {
+                    sec = max;
                     max = cmax;
                     maxind = i;
                 }
-
-                double cmin = ordered.Last().Magnitude;
-                if (cmin < min || min < 0)
-                    min = cmin;
-                i++;
             }
 
-            if(max - min >= cparam.Threshold)
+            if(max >= cparam.Threshold && max - sec >= cparam.Threshold)
             {
                 int samplesc = Samples.Skip(maxind + 1).Sum((sample) => sample.Length);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Notes.Add(new Note(afr.CurrentTime, new Random((int)((max) * 100)).Next(0, 5)));
+                    Notes.Add(new Note(mfr.CurrentTime, new Random((int)((max) * 100)).Next(0, 5)));
                 }));
             }
         }
@@ -190,8 +187,8 @@ namespace NotesGenerator
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 Console.WriteLine("Finished");
-                afr.Dispose();
-                afr = null;
+                mfr.Dispose();
+                mfr = null;
                 BeginB.IsEnabled = true;
 
                 fftProv.FftFinished -= FftProv_FftFinished;

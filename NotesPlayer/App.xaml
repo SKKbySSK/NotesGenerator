@@ -5,9 +5,15 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#FF404040"/>
         <SolidColorBrush x:Key="LaneBorderBrush" Color="Black"/>
         <SolidColorBrush x:Key="LaneFillBrush" Color="#AA000000"/>
-        <SolidColorBrush x:Key="LanePressedFillBrush" Color="#F0000000"/>
+        <SolidColorBrush x:Key="LanePressedFillBrush" Color="#CC000000"/>
         <system:Double x:Key="LaneStrokeThickness">2</system:Double>
+        
+        <SolidColorBrush x:Key="NoteFillBrush" Color="Wheat"/>
+        <system:Double x:Key="NoteHeight">30</system:Double>
+        <SolidColorBrush x:Key="NoteStrokeBrush" Color="Gray"/>
+        <system:Double x:Key="NoteStroke">0</system:Double>
     </Application.Resources>
 </Application>

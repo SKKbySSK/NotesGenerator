@@ -13,5 +13,22 @@ namespace NotesPlayer
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            App.Current.Startup += Current_Startup;
+        }
+
+        private void Current_Startup(object sender, StartupEventArgs e)
+        {
+            foreach(var arg in e.Args)
+            {
+                switch (arg.ToLower())
+                {
+                    case "auto":
+                        Instance.FullAutomatic = true;
+                        break;
+                }
+            }
+        }
     }
 }

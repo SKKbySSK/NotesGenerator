@@ -16,6 +16,9 @@
         <Label Content="{Binding ElementName=FftBeginS, Path=Value}" ContentStringFormat="{}{0}秒" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,80,10,0" VerticalAlignment="Top" Width="95"/>
         <Label Content="{Binding Value, ElementName=TakeS}" ContentStringFormat="{}{0:P0}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,36,10,0" VerticalAlignment="Top" Width="95"/>
         <CheckBox x:Name="LowPassC" Content="ローパスフィルター" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <Label Content="閾値" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="ThreshS" Margin="10,150,10,0" VerticalAlignment="Top" Maximum="50" Value="5" TickFrequency="5" SmallChange="1" Minimum="1"/>
+        <Label Content="{Binding Value, ElementName=ThreshS}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,124,10,0" VerticalAlignment="Top" Width="95"/>
 
     </Grid>
 </Window>
