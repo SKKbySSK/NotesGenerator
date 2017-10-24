@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,29 +12,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ofd = System.Windows.Forms.OpenFileDialog;
 
 namespace NotesPlayer
 {
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// MusicSelectView.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MusicSelectView : UserControl
     {
-        public MainWindow()
+        public MusicSelectView()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            ofd ofd = new ofd();
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                PlayerV.SetMusic(ofd.FileName);
-            }
         }
     }
 }

@@ -70,7 +70,7 @@ namespace NotesPlayer
         public double GreatDiff { get; set; } = 0.16;
         public double HitDiff { get; set; } = 0.24;
 
-        public TimeSpan Duration { get; set; } = TimeSpan.FromMilliseconds(700);
+        public TimeSpan Duration { get; set; } = TimeSpan.FromMilliseconds(900);
 
         #region Notes
 
@@ -134,7 +134,7 @@ namespace NotesPlayer
 
             if (from.HasValue && to.HasValue && bar.HasValue)
             {
-                ThicknessAnimation ta = new ThicknessAnimation(rect, from.Value, to.Value, actTime);
+                ThicknessAnimation ta = new ThicknessAnimation(rect, from.Value, to.Value, Duration.TotalMilliseconds);
 
                 EventHandler<ThicknessEventArgs> changed = null;
                 changed = (sender, e) =>
@@ -168,6 +168,10 @@ namespace NotesPlayer
         NoteJudgement Judge(double Position)
         {
             double diff = Math.Abs(1 - Position);
+
+            if (Instance.FullAutomatic && diff <= 0.001)
+                return NoteJudgement.Perfect;
+
             if (diff <= PerfectDiff)
                 return NoteJudgement.Perfect;
             else if (diff <= GreatDiff)

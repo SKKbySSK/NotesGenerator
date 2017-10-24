@@ -48,7 +48,8 @@ namespace NotesPlayer
 
     class ReusablePlayer
     {
-        RawSourceWaveStream raws;
+        WaveFormat format;
+        byte[] memory;
         IWavePlayer player;
         public ReusablePlayer(string Path)
         {
@@ -65,12 +66,11 @@ namespace NotesPlayer
                         ms.Position = 0;
                         mfr.CopyTo(ms);
                         mfr.Dispose();
-
-                        raws = new RawSourceWaveStream(ms, mfr.WaveFormat);
+                        memory = ms.ToArray();
+                        format = mfr.WaveFormat;
+                        ms.Dispose();
                         break;
                 }
-                player = new DirectSoundOut(50);
-                player.Init(raws);
             }
         }
 
@@ -78,7 +78,15 @@ namespace NotesPlayer
 
         public void Play()
         {
-            if (player == null) return;
+            if(player != null)
+            {
+                player.Dispose();
+            }
+
+            System.IO.MemoryStream ms = new System.IO.MemoryStream(memory);
+            RawSourceWaveStream raws = new RawSourceWaveStream(ms, format);
+            player = new DirectSoundOut(50);
+            player.Init(raws);
             raws.CurrentTime = new TimeSpan();
             player.Play();
         }

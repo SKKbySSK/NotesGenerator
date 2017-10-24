@@ -86,6 +86,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\MusicView.xaml.cs">
+      <DependentUpon>MusicView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Instance.cs" />
     <Compile Include="JudgementLabels\Judge.xaml.cs">
       <DependentUpon>Judge.xaml</DependentUpon>
@@ -93,10 +96,20 @@
     <Compile Include="JudgementLabels\Perfect.xaml.cs">
       <DependentUpon>Perfect.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MusicPlayer.cs" />
+    <Compile Include="MusicSelectView.xaml.cs">
+      <DependentUpon>MusicSelectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NAudio\NullOut.cs" />
     <Compile Include="SEPlayer.cs" />
     <Compile Include="ThicknessAnimation.cs" />
+    <Page Include="Controls\MusicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DropperView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +123,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicSelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Player.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -121,8 +142,8 @@
       <DependentUpon>DropperView.xaml</DependentUpon>
     </Compile>
     <Compile Include="KeyboardHook.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Player.xaml.cs">
+      <DependentUpon>Player.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NotesDropper.xaml">

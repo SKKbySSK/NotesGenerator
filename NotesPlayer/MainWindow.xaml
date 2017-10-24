@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotesPlayer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920" Closing="Window_Closing" Background="{DynamicResource BackgroundBrush}">
+        Title="MainWindow" Height="618.84" Width="1053.788">
     <Grid>
-        <local:NotesDropper x:Name="Dropper" Judged="Dropper_Judged"/>
+        <local:Player x:Name="PlayerV"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Label Content="{Binding Score.Value}" ContentStringFormat="{}{0:D6}" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Height="109" Width="451" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="#FF09FF79" FontSize="48"/>
 
     </Grid>
 </Window>
