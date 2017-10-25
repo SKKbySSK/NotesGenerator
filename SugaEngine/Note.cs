@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace SugaEngine
         Tap
     }
 
-    public class Note
+    public class Note : System.ComponentModel.INotifyPropertyChanged
     {
         public Note() { }
 
@@ -36,11 +37,48 @@ namespace SugaEngine
 
         public Note(TimeSpan Start, TimeSpan End, int Lane) : this(NoteMode.Continuous, Start, End, Lane) { }
 
-        public NoteMode Mode { get; set; }
-        public TimeSpan StartingTime { get; set; }
-        public TimeSpan EndingTime { get; set; }
-        public int Lane { get; set; }
-        
+        NoteMode noteMode = NoteMode.Tap;
+        public NoteMode Mode
+        {
+            get { return noteMode; }
+            set
+            {
+                noteMode = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Mode)));
+            }
+        }
+
+        TimeSpan start, end;
+        public TimeSpan StartingTime
+        {
+            get { return start; }
+            set
+            {
+                start = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StartingTime)));
+            }
+        }
+        public TimeSpan EndingTime
+        {
+            get { return end; }
+            set
+            {
+                end = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EndingTime)));
+            }
+        }
+
+        int lane;
+        public int Lane
+        {
+            get { return lane; }
+            set
+            {
+                lane = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Lane)));
+            }
+        }
+
         public TimeSpan Duration
         {
             get
@@ -51,5 +89,7 @@ namespace SugaEngine
                     return EndingTime - StartingTime;
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

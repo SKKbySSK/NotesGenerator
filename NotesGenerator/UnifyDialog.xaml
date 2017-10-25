@@ -1,0 +1,24 @@
+﻿<Window x:Class="NotesGenerator.UnifyDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NotesGenerator"
+        mc:Ignorable="d"
+        Title="ノーツを統一" Height="337.19" Width="398.347" WindowStyle="ToolWindow">
+    <TabControl>
+        <TabItem Header="時間の近いノーツ">
+            <Grid>
+                <Label Content="許容時間" VerticalAlignment="Top" Margin="0,0,55,0"/>
+                <Slider x:Name="Time_DurS" Margin="10,26,10,0" VerticalAlignment="Top" Maximum="100" SmallChange="1" LargeChange="10" Value="50" Minimum="1" IsSnapToTickEnabled="True"/>
+                <Label Content="{Binding ElementName=Time_DurS, Path=Value}" ContentStringFormat="{}{0}ms" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="45"/>
+                <RadioButton x:Name="Time_FirstR" Content="遅いほうに合わせる" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                <RadioButton x:Name="Time_LateR" Content="早いほうに合わせる" HorizontalAlignment="Left" Margin="158,74,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="Time_BeginB" Content="開始" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="104" Height="30" Click="Time_BeginB_Click"/>
+                <Label Content="注意:50ms未満では精度が高すぎるため処理されない可能性があります" Margin="10,44,10,0" VerticalAlignment="Top" Height="25"/>
+                <Label x:Name="Time_StateL" Content="" Margin="10,0,119,10" VerticalAlignment="Bottom"/>
+
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

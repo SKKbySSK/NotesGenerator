@@ -75,11 +75,14 @@ namespace NotesGenerator
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("音楽ファイルの読み込み、または再生デバイスの初期化に失敗しました。" +
-                    "\nmp3ファイルまたはsgsongファイルであることを確認してください。" +
-                    "\nまたはWASAPI排他モードを利用するソフトがある場合はそのソフトを閉じてから読み込んでください(foobar2000等)");
+                System.Windows.Forms.MessageBox.Show(@"音楽ファイルの読み込み、または再生デバイスの初期化に失敗しました。
+                    mp3ファイルまたはsgsongファイルであることを確認してください。
+                    またはWASAPI排他モードを利用するソフトがある場合はそのソフトを閉じてから読み込んでください
+                    -----メッセージ-----
+                    " + ex.Message +
+                    "\n-----スタックトレース-----\n" + ex.StackTrace);
 
                 return false;
             }
@@ -117,28 +120,30 @@ namespace NotesGenerator
                     changing = false;
                 }), Dispatcher);
 
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
             DispatcherTimer preview = new DispatcherTimer(TimeSpan.FromMilliseconds(20), DispatcherPriority.Send,
                 new EventHandler((sender, e) =>
                 {
                     if (Preview.Value)
                     {
+                        sw.Stop();
                         ClearTempoFill();
                         TimeSpan pos = Player.Position;
-                        TimeSpan range = TimeSpan.FromMilliseconds(50);
-                        if (Preview.Value)
+                        TimeSpan range = sw.Elapsed;
+                        foreach (Note note in TempNotes)
                         {
-                            foreach (Note note in TempNotes)
-                            {
-                                TimeSpan a = note.StartingTime - range;
-                                TimeSpan b = note.StartingTime + range;
+                            TimeSpan a = note.StartingTime - range;
+                            TimeSpan b = note.StartingTime + range;
 
-                                if (pos >= a && pos <= b)
-                                {
-                                    var (lab, rect, key) = GetControls(note.Lane);
-                                    rect.Fill = Brushes.Red;
-                                }
+                            if (pos >= a && pos <= b)
+                            {
+                                var (lab, rect, key) = GetControls(note.Lane);
+                                rect.Fill = Brushes.Red;
                             }
                         }
+                        sw.Reset();
+                        sw.Start();
                     }
                 }), Dispatcher);
 
@@ -203,7 +208,7 @@ namespace NotesGenerator
                     return;
             }
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "音楽ファイル|*.mp3;*.wav;*.flac;*.m4a";
+            ofd.Filter = "音楽ファイル|*.mp3;*.wav;*.flac;*.m4a|全てのファイル|*.*";
             ofd.FileName = "";
             if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -212,8 +217,13 @@ namespace NotesGenerator
                     return;
 
                 SongPathT.Text = ofd.FileName;
-                if (string.IsNullOrEmpty(TitleT.Text))
-                    TitleT.Text = System.IO.Path.GetFileNameWithoutExtension(ofd.FileName);
+
+                RWTag.TagReader reader = new RWTag.TagReader();
+                using(FileStream fs = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read))
+                {
+                    RWTag.Tag tag = reader.GetTag(fs, System.IO.Path.GetExtension(ofd.FileName));
+                    TitleT.Text = tag.Title ?? System.IO.Path.GetFileNameWithoutExtension(ofd.FileName);
+                }
             }
         }
 
@@ -575,6 +585,14 @@ namespace NotesGenerator
         private void ResetRateB_Click(object sender, RoutedEventArgs e)
         {
             PRateS.Value = 1;
+        }
+
+        private void UnifyB_Click(object sender, RoutedEventArgs e)
+        {
+            if(TempNotes.Count > 0)
+            {
+                new UnifyDialog(TempNotes).ShowDialog();
+            }
         }
     }
 

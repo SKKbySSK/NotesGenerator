@@ -30,6 +30,9 @@ namespace NotesGenerator
         public MusicPlayer(string Path, IWavePlayer Player)
         {
             output = Player;
+
+            string path = Path.ToLower();
+            
             reader = new MediaFoundationReader(Path);
             
             Equalizer eq = new Equalizer(new SampleChannel(reader));

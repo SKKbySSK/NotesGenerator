@@ -48,6 +48,9 @@
     <Reference Include="ReactiveProperty.NET46, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReactiveProperty.3.6.0\lib\net46\ReactiveProperty.NET46.dll</HintPath>
     </Reference>
+    <Reference Include="RWTag">
+      <HintPath>..\..\..\..\..\Source\Repos\ERTag\ERTag\bin\Debug\RWTag.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -108,6 +111,9 @@
     <Compile Include="SoundTouch\SoundTouchProfile.cs" />
     <Compile Include="SoundTouch\SoundTouchSettings.cs" />
     <Compile Include="SoundTouch\VarispeedSampleProvider.cs" />
+    <Compile Include="UnifyDialog.xaml.cs">
+      <DependentUpon>UnifyDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VMs\NotesLVVM.cs" />
     <Page Include="Fft.xaml">
       <SubType>Designer</SubType>
@@ -125,6 +131,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UnifyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MusicPlayer.cs" />

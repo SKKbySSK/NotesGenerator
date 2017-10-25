@@ -38,13 +38,14 @@
             <Button Grid.Column="0" x:Name="RecordB" IsEnabled="{Binding Recording.Value, Converter={StaticResource InvBool}}" Content="記録開始" HorizontalAlignment="Left" Margin="10,98,0,7" Width="130" Click="RecordB_Click"/>
             <Button Grid.Column="0" x:Name="StopRecordB" IsEnabled="{Binding Recording.Value}" Content="停止" HorizontalAlignment="Right" Margin="0,98,7,7" Width="130" Click="StopRecordB_Click"/>
             <StackPanel Orientation="Vertical" Grid.Column="1">
-                <Button x:Name="FftB" Content="FFT" Height="28" Click="FftB_Click"/>
+                <Button x:Name="UnifyB" Content="ノーツを統一" Height="28" Click="UnifyB_Click"/>
+                <Button x:Name="FftB" Content="FFT" Height="28" Click="FftB_Click" IsEnabled="False"/>
             </StackPanel>
         </Grid>
         <Slider x:Name="SeekBarS" Margin="10,133,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ValueChanged="SeekBarS_ValueChanged"/>
         <Label x:Name="PosL" Content="00:00" HorizontalAlignment="Right" Margin="0,133,10,0" VerticalAlignment="Top"/>
         <Button x:Name="PPB" Content="再生/一時停止" HorizontalAlignment="Right" Margin="0,236,10,0" VerticalAlignment="Top" Width="119" Height="26" Click="PPB_Click" Visibility="Collapsed"/>
-        <ListView Margin="10,332,10,68" ItemsSource="{Binding TempNotes}" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="NotesListView" Margin="10,332,10,68" ItemsSource="{Binding TempNotes}" SelectionChanged="ListView_SelectionChanged">
             <ListView.ContextMenu>
                 <ContextMenu x:Name="NotesMenu">
                     <MenuItem IsEnabled="False" x:Name="RemoveNoteItem" Header="削除" Click="RemoveNoteItem_Click"/>
@@ -59,11 +60,12 @@
             </ListView.View>
         </ListView>
         <Slider x:Name="PRateS" Margin="106,164,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Maximum="3" Minimum="0.1" Value="1" ValueChanged="PRateS_ValueChanged"/>
-        <Label Content="{Binding ElementName=PRateS, Path=Value}" Margin="0,162,634,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" HorizontalContentAlignment="Center"/>
+        <Label Content="{Binding ElementName=PRateS, Path=Value}" Margin="68,162,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" HorizontalContentAlignment="Center"/>
         <Button x:Name="PreviewB" Content="プレビュー開始/停止" HorizontalAlignment="Left" Margin="10,0,0,39" VerticalAlignment="Bottom" Width="145" Height="24" Click="PreviewB_Click"/>
         <Button x:Name="UsePreviewerB" Content="高度なプレビュー" HorizontalAlignment="Left" Margin="160,0,0,39" VerticalAlignment="Bottom" Width="133" Height="24" Click="UsePreviewerB_Click"/>
         <Button x:Name="ChartB" Content="波形表示" HorizontalAlignment="Left" Margin="298,0,0,39" VerticalAlignment="Bottom" Width="109" Height="24" Click="ChartB_Click"/>
         <Label Content="再生速度" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Height="31" Width="58" VerticalContentAlignment="Center"/>
         <Button x:Name="ResetRateB" Content="リセット" Margin="0,162,10,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Right" Width="47" Click="ResetRateB_Click"/>
+        <Label Content="{Binding ElementName=NotesListView, Path=Items.Count}" ContentStringFormat="{}ノーツ:{0}個" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,300,10,0" VerticalAlignment="Top" Width="85"/>
     </Grid>
 </Window>
