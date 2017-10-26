@@ -5,7 +5,7 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <SolidColorBrush x:Key="BackgroundBrush" Color="#FF404040"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="White"/>
         <SolidColorBrush x:Key="LaneBorderBrush" Color="Black"/>
         <SolidColorBrush x:Key="LaneFillBrush" Color="#AA000000"/>
         <SolidColorBrush x:Key="LanePressedFillBrush" Color="#CC000000"/>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotesPlayer.JudgementLabels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Label x:Name="PerfectL" Content="Perfect" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" d:IsLocked="True" d:IsHidden="True">
             <Label.Foreground>
@@ -17,30 +17,9 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <Label x:Name="GreatL" Content="Great" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" d:IsHidden="True">
-            <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FF1E83E8"/>
-                    <GradientStop Color="#FF17FF96" Offset="1"/>
-                </LinearGradientBrush>
-            </Label.Foreground>
-        </Label>
-        <Label x:Name="HitL" Content="Hit" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" d:IsHidden="True">
-            <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FF99A800" Offset="0.297"/>
-                    <GradientStop Color="#FFFF1761" Offset="1"/>
-                </LinearGradientBrush>
-            </Label.Foreground>
-        </Label>
-        <Label x:Name="FailedL" Content="Failed" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}">
-            <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FF2300FF" Offset="0.043"/>
-                    <GradientStop Color="#FF5D00CD" Offset="1"/>
-                </LinearGradientBrush>
-            </Label.Foreground>
-        </Label>
+        <Label x:Name="GreatL" Content="Great" FontSize="{Binding FontSize}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="#FFFF6E11" d:IsHidden="True"/>
+        <Label x:Name="HitL" Content="Hit" FontSize="{Binding FontSize}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="#FFEDFF00" d:IsHidden="True"/>
+        <Label x:Name="FailedL" Content="Failed" FontSize="{Binding FontSize}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="#FF007AFF"/>
 
     </Grid>
 </UserControl>

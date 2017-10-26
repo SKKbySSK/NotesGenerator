@@ -49,7 +49,7 @@
       <HintPath>..\packages\ReactiveProperty.3.6.0\lib\net46\ReactiveProperty.NET46.dll</HintPath>
     </Reference>
     <Reference Include="RWTag">
-      <HintPath>..\..\..\..\..\Source\Repos\ERTag\ERTag\bin\Debug\RWTag.dll</HintPath>
+      <HintPath>..\..\ERTag\ERTag\bin\Debug\RWTag.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

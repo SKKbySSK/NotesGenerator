@@ -34,24 +34,6 @@ namespace NotesPlayer
             set { Dropper.NotesDispenser = value; }
         }
 
-        public double PerfectDiff
-        {
-            get { return Dropper.PerfectDiff; }
-            set { Dropper.PerfectDiff = value; }
-        }
-
-        public double GreatDiff
-        {
-            get { return Dropper.GreatDiff; }
-            set { Dropper.GreatDiff = value; }
-        }
-
-        public double HitDiff
-        {
-            get { return Dropper.HitDiff; }
-            set { Dropper.HitDiff = value; }
-        }
-
         public TimeSpan Duration
         {
             get { return Dropper.Duration; }

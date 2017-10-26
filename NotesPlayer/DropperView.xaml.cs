@@ -66,9 +66,6 @@ namespace NotesPlayer
 
         public event EventHandler<JudgementEventArgs> Judged;
 
-        public double PerfectDiff { get; set; } = 0.08;
-        public double GreatDiff { get; set; } = 0.16;
-        public double HitDiff { get; set; } = 0.24;
 
         public TimeSpan Duration { get; set; } = TimeSpan.FromMilliseconds(900);
 
@@ -172,11 +169,11 @@ namespace NotesPlayer
             if (Instance.FullAutomatic && diff <= 0.001)
                 return NoteJudgement.Perfect;
 
-            if (diff <= PerfectDiff)
+            if (diff <= Constants.PerfectDiff)
                 return NoteJudgement.Perfect;
-            else if (diff <= GreatDiff)
+            else if (diff <= Constants.GreatDiff)
                 return NoteJudgement.Great;
-            else if (diff <= HitDiff)
+            else if (diff <= Constants.HitDiff)
                 return NoteJudgement.Hit;
             else
                 return NoteJudgement.Failed;

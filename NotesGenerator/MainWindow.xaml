@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotesGenerator"
         xmlns:vms="clr-namespace:NotesGenerator.VMs"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="630.842" MinHeight="550" Width="747.795" MinWidth="420" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" Closing="Window_Closing">
     <Window.Resources>
@@ -45,7 +46,7 @@
         <Slider x:Name="SeekBarS" Margin="10,133,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ValueChanged="SeekBarS_ValueChanged"/>
         <Label x:Name="PosL" Content="00:00" HorizontalAlignment="Right" Margin="0,133,10,0" VerticalAlignment="Top"/>
         <Button x:Name="PPB" Content="再生/一時停止" HorizontalAlignment="Right" Margin="0,236,10,0" VerticalAlignment="Top" Width="119" Height="26" Click="PPB_Click" Visibility="Collapsed"/>
-        <ListView x:Name="NotesListView" Margin="10,332,10,68" ItemsSource="{Binding TempNotes}" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="NotesListView" Margin="10,359,10.286,68.286" ItemsSource="{Binding TempNotes}" SelectionChanged="ListView_SelectionChanged">
             <ListView.ContextMenu>
                 <ContextMenu x:Name="NotesMenu">
                     <MenuItem IsEnabled="False" x:Name="RemoveNoteItem" Header="削除" Click="RemoveNoteItem_Click"/>
@@ -67,5 +68,15 @@
         <Label Content="再生速度" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Height="31" Width="58" VerticalContentAlignment="Center"/>
         <Button x:Name="ResetRateB" Content="リセット" Margin="0,162,10,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Right" Width="47" Click="ResetRateB_Click"/>
         <Label Content="{Binding ElementName=NotesListView, Path=Items.Count}" ContentStringFormat="{}ノーツ:{0}個" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,300,10,0" VerticalAlignment="Top" Width="85"/>
+        <ComboBox x:Name="LaneC" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="49,327,0,0" VerticalAlignment="Top" Width="79" Height="26" SelectionChanged="ComboBox_SelectionChanged">
+            <sys:Int32>0</sys:Int32>
+            <sys:Int32>1</sys:Int32>
+            <sys:Int32>2</sys:Int32>
+            <sys:Int32>3</sys:Int32>
+            <sys:Int32>4</sys:Int32>
+        </ComboBox>
+        <Label Content="レーン" HorizontalAlignment="Left" Margin="10,327,0,0" VerticalAlignment="Top"/>
+        <Label Content="時間" HorizontalAlignment="Left" Margin="133,327,0,0" VerticalAlignment="Top" Width="44"/>
+        <TextBox x:Name="millisecT" HorizontalAlignment="Left" Height="26" Margin="177,327,0,0" TextWrapping="Wrap" Text="0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="182" PreviewTextInput="millisecT_PreviewTextInput"/>
     </Grid>
 </Window>

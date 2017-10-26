@@ -10,6 +10,6 @@
         <local:NotesDropper x:Name="Dropper" Judged="Dropper_Judged"/>
         <Label Content="{Binding Score.Value}" ContentStringFormat="{}{0:D6}" HorizontalAlignment="Right"
                Margin="0,10,10,0" VerticalAlignment="Top" Height="109" Width="451" HorizontalContentAlignment="Right"
-               VerticalContentAlignment="Center" Foreground="#FF09FF79" FontSize="48"/>
+               VerticalContentAlignment="Top" Foreground="#FF09FF79" FontSize="48"/>
     </Grid>
 </UserControl>

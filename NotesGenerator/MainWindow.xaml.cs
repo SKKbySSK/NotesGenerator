@@ -436,6 +436,18 @@ namespace NotesGenerator
                 PreviewNoteItem.IsEnabled = true;
                 foreach (Note note in lv.SelectedItems)
                     SelectedNotes.Add(note);
+
+                if(SelectedNotes.Count == 1)
+                {
+                    LaneC.SelectedIndex = SelectedNotes[0].Lane;
+                    millisecT.Text = SelectedNotes[0].StartingTime.TotalMilliseconds.ToString();
+                    millisecT.IsEnabled = true;
+                }
+                else if(SelectedNotes.Count > 1)
+                {
+                    LaneC.SelectedIndex = -1;
+                    millisecT.IsEnabled = false;
+                }
             }
             else
             {
@@ -592,6 +604,28 @@ namespace NotesGenerator
             if(TempNotes.Count > 0)
             {
                 new UnifyDialog(TempNotes).ShowDialog();
+            }
+        }
+
+        private void millisecT_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if(int.TryParse(millisecT.Text + e.Text, out int res))
+            {
+                if(SelectedNotes.Count == 1)
+                {
+                    SelectedNotes[0].StartingTime = TimeSpan.FromMilliseconds(res);
+                }
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LaneC.SelectedIndex > -1)
+            {
+                if (SelectedNotes.Count == 1)
+                {
+                    SelectedNotes[0].Lane = LaneC.SelectedIndex;
+                }
             }
         }
     }

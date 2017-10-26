@@ -86,8 +86,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants.cs" />
     <Compile Include="Controls\MusicView.xaml.cs">
       <DependentUpon>MusicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ResultView.xaml.cs">
+      <DependentUpon>ResultView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Instance.cs" />
     <Compile Include="JudgementLabels\Judge.xaml.cs">
@@ -107,6 +111,10 @@
     <Compile Include="SEPlayer.cs" />
     <Compile Include="ThicknessAnimation.cs" />
     <Page Include="Controls\MusicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

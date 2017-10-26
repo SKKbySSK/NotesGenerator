@@ -24,7 +24,7 @@
             <Border BorderBrush="White" BorderThickness="3,0,0,3" Grid.Column="2"/>
             <Border BorderBrush="White" BorderThickness="3,0,0,3" Grid.Column="3"/>
             <Border BorderBrush="White" BorderThickness="3,0,3,3" Grid.Column="4"/>
-            <Slider Margin="10,22,10,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="5" ValueChanged="Slider_ValueChanged" Maximum="2000" Minimum="100" Value="500"/>
+            <Slider Margin="10,22,10,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="5" ValueChanged="Slider_ValueChanged" Maximum="2000" Minimum="100" Value="1700"/>
         </Grid>
         <Menu VerticalAlignment="Top" Visibility="Collapsed">
             <MenuItem x:Name="OpenItem" Header="開く" Click="OpenItem_Click"/>

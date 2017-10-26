@@ -16,6 +16,18 @@ using Reactive.Bindings;
 
 namespace NotesPlayer
 {
+    public class PlayerFinishedEventArgs : EventArgs
+    {
+        public PlayerFinishedEventArgs(IList<(NoteJudgement, SugaEngine.Note)> Judged, int Score)
+        {
+            this.Judged = Judged;
+            this.Score = Score;
+        }
+
+        public IList<(NoteJudgement, SugaEngine.Note)> Judged { get; }
+        public int Score { get; }
+    }
+
     /// <summary>
     /// Player.xaml の相互作用ロジック
     /// </summary>
@@ -30,11 +42,14 @@ namespace NotesPlayer
         }
 
         public ReactiveProperty<int> Score { get; } = new ReactiveProperty<int>(0);
-        public const int MaximumScore = 150000;
+        private List<(NoteJudgement, SugaEngine.Note)> JudgedList { get; } = new List<(NoteJudgement, SugaEngine.Note)>();
+        double actScore { get; set; } = 0;
 
-        int perfectScore { get; set; } = 0;
-        int greatScore { get; set; } = 0;
-        int hitScore { get; set; } = 0;
+        public event EventHandler<PlayerFinishedEventArgs> Finished;
+
+        double perfectScore { get; set; } = 0;
+        double greatScore { get; set; } = 0;
+        double hitScore { get; set; } = 0;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -42,34 +57,54 @@ namespace NotesPlayer
 
         public void SetMusic(string FileName)
         {
+            JudgedList.Clear();
+            actScore = 0;
             Score.Value = 0;
             if (player != null)
             {
+                player.PlaybackStateChanged -= Player_PlaybackStateChanged;
                 player.Dispose();
                 player = null;
             }
             SugaEngine.Music music = SugaEngine.Export.Notes.Deserialize(FileName);
 
-            perfectScore = MaximumScore / music.Notes.Count;
+            double score = (double)Constants.MaximumScore / music.Notes.Count;
+            perfectScore = score * Constants.Perfect;
+            greatScore = score * Constants.Great;
+            hitScore = score * Constants.Hit;
 
             try
             {
                 player = new MusicPlayer(System.IO.Path.GetDirectoryName(FileName),
-                    music, new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 50));
+                    music, new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 10));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                player = new MusicPlayer(System.IO.Path.GetDirectoryName(FileName),
-                    music, new NAudio.Wave.NullOut());
+                MessageBox.Show(ex.Message);
+                return;
             }
+            player.PlaybackStateChanged += Player_PlaybackStateChanged;
             Dropper.NotesDispenser = player;
             player.Play();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Player_PlaybackStateChanged(object sender, EventArgs e)
         {
-            player?.Dispose();
-            player = null;
+            if(e is NAudio.Wave.StoppedEventArgs)
+            {
+                StopMusic();
+                Finished?.Invoke(this, new PlayerFinishedEventArgs(JudgedList, Score.Value));
+            }
+        }
+
+        public void StopMusic()
+        {
+            if (player != null)
+            {
+                player.PlaybackStateChanged -= Player_PlaybackStateChanged;
+                player.Dispose();
+                player = null;
+            }
         }
 
         private void Dropper_Judged(object sender, JudgementEventArgs e)
@@ -77,15 +112,17 @@ namespace NotesPlayer
             switch (e.Judgement)
             {
                 case NoteJudgement.Perfect:
-                    Score.Value += perfectScore;
+                    actScore += perfectScore;
                     break;
                 case NoteJudgement.Great:
-                    Score.Value += greatScore;
+                    actScore += greatScore;
                     break;
                 case NoteJudgement.Hit:
-                    Score.Value += hitScore;
+                    actScore += hitScore;
                     break;
             }
+            JudgedList.Add((e.Judgement, e.Note));
+            Score.Value = (int)actScore;
         }
     }
 }

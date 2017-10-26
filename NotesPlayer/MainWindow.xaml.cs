@@ -27,12 +27,28 @@ namespace NotesPlayer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            ofd ofd = new ofd();
+            ofd ofd = new ofd() { Filter = "|*.sgsong" };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 PlayerV.SetMusic(ofd.FileName);
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            PlayerV.StopMusic();
+        }
+
+        private void PlayerV_Finished(object sender, PlayerFinishedEventArgs e)
+        {
+            ResultV.PerfectCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Perfect).Count();
+            ResultV.GreatCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Great).Count();
+            ResultV.HitCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Hit).Count();
+            ResultV.FailedCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Failed).Count();
+            ResultV.Score.Value = e.Score;
+
+            var sb = (System.Windows.Media.Animation.Storyboard)Resources["AnimateToResult"];
+            sb.Begin();
         }
     }
 }

@@ -1,0 +1,36 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotesPlayer.Controls"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:JudgementLabels="clr-namespace:NotesPlayer.JudgementLabels" x:Class="NotesPlayer.Controls.ResultView"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" d:DesignWidth="1920" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <UserControl.Resources>
+        <sys:Double x:Key="CountSize">50</sys:Double>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <JudgementLabels:Judge FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Margin="0,405,0,0" Width="237" Judgement="Perfect" Grid.RowSpan="2"/>
+        <JudgementLabels:Judge FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Margin="0,0,0,134.714" Width="232" Judgement="Great" Grid.Row="2" Grid.RowSpan="2"/>
+        <JudgementLabels:Judge FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Margin="0,0.143,0,134.571" Width="237" Judgement="Hit" Grid.Row="3" Grid.RowSpan="2"/>
+        <JudgementLabels:Judge FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Margin="0,0.286,0,135" Width="232" Judgement="Failed" Grid.Row="4" Grid.RowSpan="2"/>
+        <Label Content="{Binding PerfectCount.Value}" FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Foreground="#FFF31E1E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="325" Margin="237,0,0,0" Grid.Row="1"/>
+        <Label Content="{Binding GreatCount.Value}" FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Grid.Row="2" Foreground="#FFF31E1E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="330" Margin="237,0,0,0"/>
+        <Label Content="{Binding HitCount.Value}" FontSize="{DynamicResource CountSize}" Grid.Row="3" Foreground="#FFF31E1E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="237,0,0,0" HorizontalAlignment="Left" Width="325"/>
+        <Label Content="{Binding FailedCount.Value}" FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Grid.Row="4" Foreground="#FFF31E1E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="330" Margin="237,0,0, 0"/>
+        <Label Content="A" HorizontalAlignment="Left" Margin="10,10,0,9.143" Width="395" HorizontalContentAlignment="Center" FontSize="300" Foreground="Red" VerticalContentAlignment="Center"/>
+        <Label Content="{Binding Score.Value}" ContentStringFormat="{}{0:D6}" Margin="786,10,222,10.143" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="#FFE21D1D" FontSize="150"/>
+
+    </Grid>
+</UserControl>
