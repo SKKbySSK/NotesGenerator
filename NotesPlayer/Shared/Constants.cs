@@ -20,5 +20,17 @@ namespace NotesPlayer
         public const int RankA = 80000;
         public const int RankB = 60000;
         public const int RankC = 30000;
+
+        public const string NavMusicKey = "MUSIC";
+        public const string NavMusicFileKey = "MUSIC_FILE";
+        public const string NavUserNameKey = "USER_NAME";
+        public const string NavDifficulty = "DIFFICULT";
+        public const string NavSgSongPath = "SGSONG";
+        public const string NavResult = "RESULT";
+
+        public const string NormalSgSongName = "_Normal.sgsong";
+        public const string EasySgSongName = "_Easy.sgsong";
+
+        public const string RankindFileName = "Rank.sgr";
     }
 }

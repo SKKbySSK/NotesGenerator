@@ -12,32 +12,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using NotesPlayer.Extensions;
 
 namespace NotesPlayer.Controls
 {
     /// <summary>
-    /// MusicView.xaml の相互作用ロジック
+    /// RankView.xaml の相互作用ロジック
     /// </summary>
-    public partial class MusicView : UserControl
+    public partial class RankView : UserControl
     {
-        public MusicView()
+        public RankView(int Rank)
         {
             InitializeComponent();
+            RankT.Content = Rank;
         }
 
-        public string Title { get => (string)TitleL.Content; set => TitleL.Content = value; }
-        public ImageSource Thumb { get => ThumbI.Source; set => ThumbI.Source = value; }
-
-        public void Show()
+        Ranking.Result res = null;
+        public Ranking.Result Result
         {
-            ThumbI.AnimateOpacity(1);
-        }
-
-        public void Hide()
-        {
-            ThumbI.Visibility = Visibility.Visible;
-            ThumbI.AnimateOpacity(0);
+            get { return res; }
+            set
+            {
+                res = value;
+                NameT.Content = res.UserName;
+                ScoreT.Content = res.Score;
+            }
         }
     }
 }

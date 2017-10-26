@@ -6,28 +6,8 @@
         xmlns:local="clr-namespace:NotesPlayer"
         xmlns:Controls="clr-namespace:NotesPlayer.Controls" x:Class="NotesPlayer.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1067.411" Width="1559.502" Closing="Window_Closing">
-    <Window.Resources>
-        <Storyboard x:Key="AnimateToResult">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PlayerV">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                <SplineDoubleKeyFrame KeyTime="0:0:0.6" Value="0" KeySpline="0.93,0,1,0.98"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ResultV">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="1">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <CircleEase EasingMode="EaseInOut"/>
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-    </Window.Resources>
+        Title="MainWindow" Height="1067.411" Width="1559.502" WindowStyle="None" WindowState="Maximized" Topmost="True">
     <Grid>
-        <local:Player x:Name="PlayerV" Finished="PlayerV_Finished" Background="#FFA4A4A4" Opacity="1"/>
-
-        <Controls:ResultView x:Name="ResultV" Margin="0,0,0,0.286" Opacity="0"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-
+        <Rectangle x:Name="FadeR" Fill="Black"/>
     </Grid>
 </Window>

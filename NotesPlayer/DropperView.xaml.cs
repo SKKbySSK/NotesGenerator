@@ -166,8 +166,13 @@ namespace NotesPlayer
         {
             double diff = Math.Abs(1 - Position);
 
-            if (Instance.FullAutomatic && diff <= 0.001)
-                return NoteJudgement.Perfect;
+            if (Instance.FullAutomatic)
+            {
+                if (diff <= 0.03)
+                    return NoteJudgement.Perfect;
+                else
+                    return NoteJudgement.Failed;
+            }
 
             if (diff <= Constants.PerfectDiff)
                 return NoteJudgement.Perfect;

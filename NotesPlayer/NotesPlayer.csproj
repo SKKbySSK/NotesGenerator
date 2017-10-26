@@ -86,14 +86,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Constants.cs" />
+    <Compile Include="Controls\MusicSelectionView.xaml.cs">
+      <DependentUpon>MusicSelectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MusicView.xaml.cs">
       <DependentUpon>MusicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RankingView.xaml.cs">
+      <DependentUpon>RankingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RankView.xaml.cs">
+      <DependentUpon>RankView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StartupView.xaml.cs">
+      <DependentUpon>StartupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Difficulty.cs" />
+    <Compile Include="Ranking\Result.cs" />
+    <Compile Include="Ranking\Saved.cs" />
+    <Compile Include="Shared\Constants.cs" />
+    <Compile Include="Controls\DifficultyView.xaml.cs">
+      <DependentUpon>DifficultyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageButton.xaml.cs">
+      <DependentUpon>ImageButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Instance.cs" />
+    <Compile Include="Extensions\ElementExtension.cs" />
+    <Compile Include="Shared\Instance.cs" />
     <Compile Include="JudgementLabels\Judge.xaml.cs">
       <DependentUpon>Judge.xaml</DependentUpon>
     </Compile>
@@ -104,17 +126,39 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MusicPlayer.cs" />
-    <Compile Include="MusicSelectView.xaml.cs">
-      <DependentUpon>MusicSelectView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NAudio\NullOut.cs" />
     <Compile Include="SEPlayer.cs" />
+    <Compile Include="Shared\Navigate.cs" />
     <Compile Include="ThicknessAnimation.cs" />
+    <Page Include="Controls\DifficultyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MusicSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MusicView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RankingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RankView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StartupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,10 +175,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MusicSelectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +236,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Controls\106.jpg" />
+    <Resource Include="Resources\next-page.png" />
+    <Resource Include="Resources\spider-web.png" />
     <Content Include="SE\Perfect.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NotesPlayer
 {
-    static class Instance
+    static class Navigate
     {
-        public static bool FullAutomatic { get; set; } = false;
+        public static Dictionary<string, object> Parameters { get; } = new Dictionary<string, object>();
     }
 }

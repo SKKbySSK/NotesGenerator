@@ -37,6 +37,10 @@ namespace NotesPlayer
 
         public void Play()
         {
+            if (Instance.Skip)
+            {
+                reader.CurrentTime = reader.TotalTime - TimeSpan.FromMilliseconds(1000);
+            }
             output.Play();
             PlaybackStateChanged?.Invoke(this, new EventArgs());
         }

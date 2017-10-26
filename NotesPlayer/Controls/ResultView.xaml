@@ -29,7 +29,7 @@
         <Label Content="{Binding GreatCount.Value}" FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Grid.Row="2" Foreground="#FFF31E1E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="330" Margin="237,0,0,0"/>
         <Label Content="{Binding HitCount.Value}" FontSize="{DynamicResource CountSize}" Grid.Row="3" Foreground="#FFF31E1E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="237,0,0,0" HorizontalAlignment="Left" Width="325"/>
         <Label Content="{Binding FailedCount.Value}" FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Grid.Row="4" Foreground="#FFF31E1E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="330" Margin="237,0,0, 0"/>
-        <Label Content="A" HorizontalAlignment="Left" Margin="10,10,0,9.143" Width="395" HorizontalContentAlignment="Center" FontSize="300" Foreground="Red" VerticalContentAlignment="Center"/>
+        <Label x:Name="RankL" Content="A" HorizontalAlignment="Left" Margin="10,10,0,9.143" Width="395" HorizontalContentAlignment="Center" FontSize="300" Foreground="Red" VerticalContentAlignment="Center"/>
         <Label Content="{Binding Score.Value}" ContentStringFormat="{}{0:D6}" Margin="786,10,222,10.143" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="#FFE21D1D" FontSize="150"/>
 
     </Grid>

@@ -27,6 +27,9 @@ namespace NotesPlayer
                     case "auto":
                         Instance.FullAutomatic = true;
                         break;
+                    case "skip":
+                        Instance.Skip = true;
+                        break;
                 }
             }
         }

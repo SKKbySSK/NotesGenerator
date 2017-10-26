@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,16 +13,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotesPlayer
+namespace NotesPlayer.Controls
 {
     /// <summary>
-    /// MusicSelectView.xaml の相互作用ロジック
+    /// StartupView.xaml の相互作用ロジック
     /// </summary>
-    public partial class MusicSelectView : UserControl
+    public partial class StartupView : UserControl
     {
-        public MusicSelectView()
+        public event EventHandler Start;
+
+        public StartupView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Start?.Invoke(this, new EventArgs());
         }
     }
 }

@@ -55,7 +55,7 @@ namespace NotesPlayer
         {
         }
 
-        public void SetMusic(string FileName)
+        public void SetMusic(string Directory, SugaEngine.Music Music)
         {
             JudgedList.Clear();
             actScore = 0;
@@ -66,17 +66,16 @@ namespace NotesPlayer
                 player.Dispose();
                 player = null;
             }
-            SugaEngine.Music music = SugaEngine.Export.Notes.Deserialize(FileName);
 
-            double score = (double)Constants.MaximumScore / music.Notes.Count;
+            double score = (double)Constants.MaximumScore / Music.Notes.Count;
             perfectScore = score * Constants.Perfect;
             greatScore = score * Constants.Great;
             hitScore = score * Constants.Hit;
 
             try
             {
-                player = new MusicPlayer(System.IO.Path.GetDirectoryName(FileName),
-                    music, new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 10));
+                player = new MusicPlayer(Directory,
+                    Music, new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 10));
             }
             catch (Exception ex)
             {

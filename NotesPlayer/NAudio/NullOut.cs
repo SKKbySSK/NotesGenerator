@@ -46,6 +46,7 @@ namespace NAudio.Wave
                 {
                     Task.Delay(ms).Wait();
                 }
+                PlaybackStopped?.Invoke(this, new StoppedEventArgs());
             });
         }
 
