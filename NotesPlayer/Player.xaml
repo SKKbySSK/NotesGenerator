@@ -21,10 +21,12 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
+        <Image Source="Resources/Image_fc19399.jpg" Stretch="UniformToFill" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Label x:Name="SongL" Content="Label" Grid.Row="1" VerticalAlignment="Bottom" Height="107" Grid.ColumnSpan="2" FontSize="50" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Microsoft JhengHei Light" Background="#72000000"/>
         <local:NotesDropper x:Name="Dropper" Judged="Dropper_Judged" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        <Label Content="{Binding Score.Value}" ContentStringFormat="Score:{0:D6}" HorizontalAlignment="Right"
-               Margin="0,10,10,0" VerticalAlignment="Top" Height="109" Width="640" HorizontalContentAlignment="Right"
-               VerticalContentAlignment="Top" FontSize="48" Grid.Column="1" Foreground="{DynamicResource TextBrush}"/>
+        <Controls:AnimatedLabel x:Name="ScoreL" Score="0" ContentStringFormat="{}{0:D6}" HorizontalAlignment="Right"
+               Margin="0,10,10,0" VerticalAlignment="Top" Height="109" Width="458" HorizontalContentAlignment="Right"
+               VerticalContentAlignment="Center" FontSize="48" Grid.Column="1" Foreground="{DynamicResource TextBrush}"/>
         <Label Content="{Binding Combo.Value}" ContentStringFormat="{}{0} Combo!" HorizontalAlignment="Left" FontSize="48" VerticalContentAlignment="Center"  Margin="10,10,0,0" VerticalAlignment="Top" Height="109" Width="460" Grid.ColumnSpan="2" Foreground="{DynamicResource TextBrush}" Background="{x:Null}"/>
     </Grid>
 </UserControl>

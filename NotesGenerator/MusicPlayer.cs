@@ -21,7 +21,6 @@ namespace NotesGenerator
         private MediaFoundationReader reader;
         private IWavePlayer output;
         private SoundTouch.VarispeedSampleProvider speed;
-        private FFT.SampleProvider fft;
 
         public MusicPlayer(string Path) : this(Path, new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, Latency))
         {
@@ -68,12 +67,6 @@ namespace NotesGenerator
         {
             output.Pause();
             PlaybackStateChanged?.Invoke(this, new EventArgs());
-        }
-
-        public int NumberOfFftSamples
-        {
-            get { return fft.NumberOfSamples; }
-            set { fft.NumberOfSamples = value; }
         }
 
         public void Dispose()

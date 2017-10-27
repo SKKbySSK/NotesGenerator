@@ -47,48 +47,51 @@ namespace NotesPlayer.Controls
 
         public event EventHandler<SelectedEventArgs> MusicSelected;
         MusicItem current;
-
-        List<MusicItem> Songs = new List<MusicItem>(new MusicItem[]
-            {
-                new MusicItem(@"C:\Users\Kaisei Sunaga\Desktop\キミの街へ\04 キミの街へ☆彡 Uplifting House Version.sgsong"),
-                new MusicItem(@"C:\Users\Kaisei Sunaga\Desktop\Fumen1\レコーディング.sgsong")
-            });
+        MusicItem Song1i = new MusicItem(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\BeforeTheLive\Before The Live.sgsong");
+        MusicItem Song2i = new MusicItem(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\アリス　アイリス\アリス　アイリス.sgsong");
+        AudioPlayer player;
 
         public MusicSelectionView()
         {
             InitializeComponent();
-
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                const double ItemHeight = 140;
-                foreach (MusicItem mi in Songs)
-                {
-                    MusicView mview = new MusicView();
-                    mview.Title = mi.Music.Title;
-                    mview.Margin = new Thickness(0, 30, 0, 0);
-                    mview.Height = ItemHeight;
-                    mview.FontSize = 45;
-                    mview.MouseLeftButtonDown += (sender, e) =>
-                    {
-                        MusicView mv = (MusicView)sender;
-                        foreach (MusicView cur in SongStack.Children)
-                        {
-                            if (cur != mv)
-                                cur.Hide();
-                            else
-                                cur.Show();
-                        }
-                        current = mi;
-                    };
-                    SongStack.Children.Add(mview);
-                }
-            }));
         }
 
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
             if (current != null)
+            {
+                if (player != null)
+                    player.Dispose();
+
                 MusicSelected?.Invoke(this, new SelectedEventArgs(current.SgSongPath, current.Music));
+            }
+        }
+
+        private void Song2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Song2.Background = (Brush)Resources["SelectedBrush"];
+            Song1.Background = (Brush)Resources["DefaultBrush"];
+            current = Song2i;
+
+            InitPlayer(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\アリス　アイリス\アリス　アイリス.mp3");
+            player.Play(TimeSpan.FromMilliseconds(3000), TimeSpan.FromMilliseconds(10000));
+        }
+
+        private void Song1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Song1.Background = (Brush)Resources["SelectedBrush"];
+            Song2.Background = (Brush)Resources["DefaultBrush"];
+            current = Song1i;
+
+            InitPlayer(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\BeforeTheLive\Before The Live.wav");
+            player.Play(TimeSpan.FromMilliseconds(3000), TimeSpan.FromMilliseconds(10000));
+        }
+
+        void InitPlayer(string Path)
+        {
+            if (player != null)
+                player.Dispose();
+            player = new AudioPlayer(Path);
         }
     }
 }

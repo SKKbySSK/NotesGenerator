@@ -13,10 +13,10 @@
         <SolidColorBrush x:Key="RankViewBrush" Color="Black"/>
         <SolidColorBrush x:Key="DifficultyBrush" Color="Black"/>
         <system:Double x:Key="LaneStrokeThickness">2</system:Double>
-        
-        <SolidColorBrush x:Key="NoteFillBrush" Color="Wheat"/>
+
+        <SolidColorBrush x:Key="NoteFillBrush" Color="#e2e2e2"/>
         <system:Double x:Key="NoteHeight">30</system:Double>
         <SolidColorBrush x:Key="NoteStrokeBrush" Color="Gray"/>
-        <system:Double x:Key="NoteStroke">0</system:Double>
+        <system:Double x:Key="NoteStroke">1</system:Double>
     </Application.Resources>
 </Application>

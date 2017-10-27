@@ -7,10 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-        <ScrollViewer Margin="45,0,150,0" VerticalScrollBarVisibility="Auto">
+        <Image Source="/NotesPlayer;component/Resources/Image_e25e30b.jpg" Stretch="UniformToFill"/>
+        <ScrollViewer Margin="45,10,150,10" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="RankStack"/>
         </ScrollViewer>
 
-        <local:ImageButton VerticalAlignment="Center" EnableAnimation="True" Clicked="ImageButton_Clicked"  Image="/NotesPlayer;component/Resources/next-page.png" IsLabelHidden="True" Height="160" Margin="0,220,10,220" HorizontalAlignment="Right" Width="135"/>
+        <local:ImageButton VerticalAlignment="Center" EnableAnimation="True" Clicked="ImageButton_Clicked"  Image="/NotesPlayer;component/Resources/next-page.png" IsLabelHidden="True" Height="160" Margin="0,220,23,220" HorizontalAlignment="Right" Width="102"/>
     </Grid>
 </UserControl>

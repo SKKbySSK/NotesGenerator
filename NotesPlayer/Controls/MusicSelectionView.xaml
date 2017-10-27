@@ -6,10 +6,29 @@
              xmlns:local="clr-namespace:NotesPlayer.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="DefaultBrush" Color="#7F000000"/>
+        <SolidColorBrush x:Key="SelectedBrush" Color="#E5064444"/>
+    </UserControl.Resources>
     <Grid>
-        <ScrollViewer x:Name="ParentSongs" Margin="72,10,227,10" VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="SongStack"/>
-        </ScrollViewer>
-        <local:ImageButton HorizontalAlignment="Right" VerticalAlignment="Center" EnableAnimation="True" Clicked="ImageButton_Clicked" Image="/NotesPlayer;component/Resources/next-page.png" IsLabelHidden="True" Width="192" Margin="0,220,30,220" Height="160"/>
+        <Image Source="/NotesPlayer;component/Resources/Image_fc19399.jpg" Stretch="UniformToFill" Grid.RowSpan="2"/>
+        <Grid x:Name="ParentSongs" Margin="72,10,227,10" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <local:MusicView x:Name="Song1" FontSize="40" Margin="10,0,10,10" Height="90" VerticalAlignment="Bottom" Title="Before The Live" Background="{DynamicResource DefaultBrush}" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Song1_MouseLeftButtonDown">
+                <local:MusicView.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </local:MusicView.RenderTransform>
+            </local:MusicView>
+            <local:MusicView x:Name="Song2" FontSize="40" Margin="10,10,10,0" Grid.Row="1" Height="90" Title="アリス アイリス" VerticalAlignment="Top" Background="{DynamicResource DefaultBrush}" MouseLeftButtonDown="Song2_MouseLeftButtonDown"/>
+        </Grid>
+        <local:ImageButton HorizontalAlignment="Right" VerticalAlignment="Center" EnableAnimation="True" Clicked="ImageButton_Clicked" Image="/NotesPlayer;component/Resources/next-page.png" IsLabelHidden="True" Width="192" Margin="0,220,30,220" Height="160" Grid.RowSpan="2"/>
     </Grid>
 </UserControl>

@@ -44,7 +44,8 @@ namespace NotesPlayer
                 GC.Collect(3, GCCollectionMode.Forced, true, true);
             }
         }
-
+        
+        AudioPlayer AudioPlayer { get; set; }
         ControlsSet CurrentSet { get; set; }
 
         public MainWindow()
@@ -55,8 +56,18 @@ namespace NotesPlayer
 
         void BeginGaming()
         {
+            if(AudioPlayer != null)
+            {
+                AudioPlayer.Dispose();
+                AudioPlayer = null;
+            }
+
             Navigate.Parameters.Clear();
             CurrentSet = new ControlsSet();
+            AudioPlayer = new AudioPlayer("BGM.wav");
+            AudioPlayer.Volume = 0.1f;
+            AudioPlayer.Play();
+
             CurrentSet.StartupView.Value.Start += Value_Start;
             SetView(CurrentSet.StartupView.Value);
             FadeIn();
@@ -91,17 +102,17 @@ namespace NotesPlayer
         {
             CurrentSet.DifficultyView.Value.Ready -= Value_Ready;
 
+            AudioPlayer.FadeOut(500);
             FadeOut(() =>
             {
+                AudioPlayer.Pause();
                 CurrentSet.ReadyToPlay();
                 SetView(CurrentSet.PlayerView.Value);
                 string path = (string)Navigate.Parameters[Constants.NavMusicFileKey];
                 SugaEngine.Music music = (SugaEngine.Music)Navigate.Parameters[Constants.NavMusicKey];
                 CurrentSet.PlayerView.Value.SetMusic(System.IO.Path.GetDirectoryName(path), music, e.Difficulty);
-                FadeIn(() =>
-                {
-                    CurrentSet.PlayerView.Value.Finished += Value_Finished;
-                });
+                CurrentSet.PlayerView.Value.Finished += Value_Finished;
+                FadeIn();
             });
         }
 
@@ -111,12 +122,11 @@ namespace NotesPlayer
             FadeOut(() =>
             {
                 int combo = (int)Navigate.Parameters[Constants.NavComboKey];
-                CurrentSet.ResultView.Value.PerfectCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Perfect).Count();
-                CurrentSet.ResultView.Value.GreatCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Great).Count();
-                CurrentSet.ResultView.Value.HitCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Hit).Count();
-                CurrentSet.ResultView.Value.FailedCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Failed).Count();
-                CurrentSet.ResultView.Value.Score.Value = e.Score;
-                CurrentSet.ResultView.Value.Combo.Value = combo;
+                int pc = e.Judged.Where((j) => j.Item1 == NoteJudgement.Perfect).Count();
+                int gc = e.Judged.Where((j) => j.Item1 == NoteJudgement.Great).Count();
+                int hc = e.Judged.Where((j) => j.Item1 == NoteJudgement.Hit).Count();
+                int fc = e.Judged.Where((j) => j.Item1 == NoteJudgement.Failed).Count();
+                CurrentSet.ResultView.Value.SetScore(e.Score, combo, pc, gc, hc, fc);
                 SetView(CurrentSet.ResultView.Value);
 
                 var res = new Ranking.Result()
@@ -136,6 +146,8 @@ namespace NotesPlayer
                 CurrentSet.ResultView.Value.Dismissed += Value_Dismissed;
 
                 FadeIn();
+                AudioPlayer.Play();
+                AudioPlayer.FadeIn(1500);
             });
         }
 

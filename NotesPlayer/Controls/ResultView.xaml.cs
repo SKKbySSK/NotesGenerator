@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Reactive.Bindings;
+using System.Windows.Threading;
+using NotesPlayer.Extensions;
 
 namespace NotesPlayer.Controls
 {
@@ -26,10 +28,9 @@ namespace NotesPlayer.Controls
         public ResultView()
         {
             InitializeComponent();
-            Score.PropertyChanged += Score_PropertyChanged;
         }
         
-        private void Score_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public void SetScore(int Score, int Combo, int Perfect, int Great, int Hit, int Failed)
         {
             Brush brush = null;
 
@@ -57,22 +58,22 @@ namespace NotesPlayer.Controls
             }
             else
             {
-                if (Score.Value >= Constants.RankS)
+                if (Score >= Constants.RankS)
                 {
                     RankL.Content = "S";
                     brush = (Brush)Resources["RankSBrush"];
                 }
-                else if (Score.Value >= Constants.RankA)
+                else if (Score >= Constants.RankA)
                 {
                     RankL.Content = "A";
                     brush = (Brush)Resources["RankABrush"];
                 }
-                else if (Score.Value >= Constants.RankB)
+                else if (Score >= Constants.RankB)
                 {
                     RankL.Content = "B";
                     brush = (Brush)Resources["RankBBrush"];
                 }
-                else if (Score.Value >= Constants.RankC)
+                else if (Score >= Constants.RankC)
                 {
                     RankL.Content = "C";
                     brush = (Brush)Resources["RankCBrush"];
@@ -86,14 +87,69 @@ namespace NotesPlayer.Controls
 
             RankL.Foreground = brush ?? new SolidColorBrush(Colors.Black);
             ScoreL.Foreground = brush ?? new SolidColorBrush(Colors.Black);
+
+            this.Score = Score;
+            this.Combo = Combo;
+            Pc = Perfect;
+            Gc = Great;
+            Hc = Hit;
+            Fc = Failed;
+
+            ScoreL.Animated += ScoreL_Animated;
+            ScoreL.Score = Score;
         }
 
-        public ReactiveProperty<int> PerfectCount { get; } = new ReactiveProperty<int>(0);
-        public ReactiveProperty<int> GreatCount { get; } = new ReactiveProperty<int>(0);
-        public ReactiveProperty<int> HitCount { get; } = new ReactiveProperty<int>(0);
-        public ReactiveProperty<int> FailedCount { get; } = new ReactiveProperty<int>(0);
-        public ReactiveProperty<int> Score { get; } = new ReactiveProperty<int>(-1);
-        public ReactiveProperty<int> Combo { get; } = new ReactiveProperty<int>(0);
+        private void ScoreL_Animated(object sender, EventArgs e)
+        {
+            ComboL.Duration = CalcSpan(Combo, TimeSpan.FromMilliseconds(1000));
+            ComboL.Animated += ComboL_Animated;
+            ComboL.Score = Combo;
+        }
+
+        private void ComboL_Animated(object sender, EventArgs e)
+        {
+            DispatcherTimer dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromMilliseconds(400);
+
+            int i = 0;
+            dt.Tick += (_, _2) =>
+            {
+                switch (i)
+                {
+                    case 0:
+                        GreatL.Duration = CalcSpan(Gc, TimeSpan.FromMilliseconds(1000));
+                        GreatL.Score = Gc;
+                        break;
+                    case 1:
+                        HitL.Duration = CalcSpan(Hc, TimeSpan.FromMilliseconds(1000));
+                        HitL.Score = Hc;
+                        break;
+                    case 2:
+                        FailedL.Duration = CalcSpan(Fc, TimeSpan.FromMilliseconds(1000));
+                        FailedL.Animated += FailedL_Animated;
+                        FailedL.Score = Fc;
+                        dt.Stop();
+                        break;
+                }
+                i++;
+            };
+            PerfectL.Duration = CalcSpan(Pc, TimeSpan.FromMilliseconds(1000));
+            PerfectL.Score = Pc;
+            dt.Start();
+        }
+
+        private void FailedL_Animated(object sender, EventArgs e)
+        {
+            RankL.AnimateOpacity(1, 3000);
+        }
+
+        TimeSpan CalcSpan(int ToScore, TimeSpan PerHandred)
+        {
+            double p = ToScore / 100.0;
+            return TimeSpan.FromMilliseconds(PerHandred.TotalMilliseconds * p);
+        }
+        
+        private int Score, Combo, Pc, Gc, Hc, Fc;
 
         private void ImageButton_Clicked(object sender, EventArgs e)
         {

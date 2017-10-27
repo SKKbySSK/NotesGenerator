@@ -535,48 +535,48 @@ namespace NotesGenerator
                     avseries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
                     avseries.ChartArea = "Average";
 
-                    int count = Player.NumberOfFftSamples / 4;
-                    double max = 0, bfreq = Player.WaveFormat.SampleRate / 2 / count;
+                    //int count = Player.NumberOfFftSamples / 4;
+                    //double max = 0, bfreq = Player.WaveFormat.SampleRate / 2 / count;
 
-                    EventHandler<FFT.FourierEventArgs> ev = (_, fft) =>
-                    {
-                        Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            if (fftseries != null && fftseries.Points != null)
-                            {
-                                fftseries.Points.Clear();
+                    //EventHandler<FFT.FourierEventArgs> ev = (_, fft) =>
+                    //{
+                    //    Dispatcher.BeginInvoke(new Action(() =>
+                    //    {
+                    //        if (fftseries != null && fftseries.Points != null)
+                    //        {
+                    //            fftseries.Points.Clear();
 
-                                double av = 0;
-                                for (int i = 1; count >= i; i++)
-                                {
-                                    double mag = fft.Samples[i - 1].Magnitude;
+                    //            double av = 0;
+                    //            for (int i = 1; count >= i; i++)
+                    //            {
+                    //                double mag = fft.Samples[i - 1].Magnitude;
 
-                                    if (mag > max)
-                                    {
-                                        max = mag;
-                                    }
+                    //                if (mag > max)
+                    //                {
+                    //                    max = mag;
+                    //                }
 
-                                    fftseries.Points.AddXY(i * bfreq, mag);
-                                    av += mag;
-                                }
-                                av /= count;
-                                avseries.Points.Clear();
-                                avseries.Points.AddXY(1, av);
-                            }
-                        }));
-                    };
+                    //                fftseries.Points.AddXY(i * bfreq, mag);
+                    //                av += mag;
+                    //            }
+                    //            av /= count;
+                    //            avseries.Points.Clear();
+                    //            avseries.Points.AddXY(1, av);
+                    //        }
+                    //    }));
+                    //};
 
-                    Player.FftFinished += ev;
+                    //Player.FftFinished += ev;
 
-                    chart.Series.Add(fftseries);
-                    chart.Series.Add(avseries);
+                    //chart.Series.Add(fftseries);
+                    //chart.Series.Add(avseries);
 
-                    form.FormClosed += (_, _2) =>
-                    {
-                        if (Player != null) Player.FftFinished -= ev;
-                        GraphForm = null;
-                        ChartB.IsEnabled = true;
-                    };
+                    //form.FormClosed += (_, _2) =>
+                    //{
+                    //    if (Player != null) Player.FftFinished -= ev;
+                    //    GraphForm = null;
+                    //    ChartB.IsEnabled = true;
+                    //};
                 }
                 
                 form.Controls.Add(chart);

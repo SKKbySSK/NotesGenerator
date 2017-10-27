@@ -40,8 +40,7 @@ namespace NotesPlayer
             InitializeComponent();
             DataContext = this;
         }
-
-        public ReactiveProperty<int> Score { get; } = new ReactiveProperty<int>(0);
+        
         public ReactiveProperty<int> Combo { get; } = new ReactiveProperty<int>(0);
         private List<(NoteJudgement, SugaEngine.Note)> JudgedList { get; } = new List<(NoteJudgement, SugaEngine.Note)>();
         double actScore { get; set; } = 0;
@@ -74,11 +73,11 @@ namespace NotesPlayer
             }
             Grid.SetColumn(img, 0);
             Grid.SetRow(img, 1);
-            ((Grid)Content).Children.Insert(1, img);
+            ((Grid)Content).Children.Insert(2, img);
 
             JudgedList.Clear();
             actScore = 0;
-            Score.Value = 0;
+            ScoreL.Score = 0;
             Combo.Value = 0;
             if (player != null)
             {
@@ -102,6 +101,7 @@ namespace NotesPlayer
                 MessageBox.Show(ex.Message);
                 return;
             }
+            SongL.Content = Music.Title;
             player.PlaybackStateChanged += Player_PlaybackStateChanged;
             Dropper.NotesDispenser = player;
             player.Play();
@@ -112,7 +112,7 @@ namespace NotesPlayer
             if(e is NAudio.Wave.StoppedEventArgs)
             {
                 StopMusic();
-                Finished?.Invoke(this, new PlayerFinishedEventArgs(JudgedList, Score.Value));
+                Finished?.Invoke(this, new PlayerFinishedEventArgs(JudgedList, ScoreL.Score));
             }
         }
 
@@ -154,7 +154,7 @@ namespace NotesPlayer
             }
 
             JudgedList.Add((e.Judgement, e.Note));
-            Score.Value = (int)actScore;
+            ScoreL.Score = (int)actScore;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace NotesPlayer
 
         public Thickness Current { get; }
     }
+
     public class ThicknessAnimation
     {
         public ThicknessAnimation(FrameworkElement Element, Thickness From, Thickness To, double Duration)

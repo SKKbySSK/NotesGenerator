@@ -27,17 +27,5 @@ namespace NotesPlayer.Controls
         }
 
         public string Title { get => (string)TitleL.Content; set => TitleL.Content = value; }
-        public ImageSource Thumb { get => ThumbI.Source; set => ThumbI.Source = value; }
-
-        public void Show()
-        {
-            ThumbI.AnimateOpacity(1);
-        }
-
-        public void Hide()
-        {
-            ThumbI.Visibility = Visibility.Visible;
-            ThumbI.AnimateOpacity(0);
-        }
     }
 }
