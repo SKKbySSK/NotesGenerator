@@ -22,6 +22,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Image Source="Resources/Image_fc19399.jpg" Stretch="UniformToFill" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Image x:Name="SkyI" Source="Resources/S_6904059668345.jpg" Stretch="UniformToFill" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         <Label x:Name="SongL" Content="Label" Grid.Row="1" VerticalAlignment="Bottom" Height="107" Grid.ColumnSpan="2" FontSize="50" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Microsoft JhengHei Light" Background="#72000000"/>
         <local:NotesDropper x:Name="Dropper" Judged="Dropper_Judged" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         <Controls:AnimatedLabel x:Name="ScoreL" Score="0" ContentStringFormat="{}{0:D6}" HorizontalAlignment="Right"

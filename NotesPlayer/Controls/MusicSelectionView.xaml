@@ -11,7 +11,7 @@
         <SolidColorBrush x:Key="SelectedBrush" Color="#E5064444"/>
     </UserControl.Resources>
     <Grid>
-        <Image Source="/NotesPlayer;component/Resources/Image_fc19399.jpg" Stretch="UniformToFill" Grid.RowSpan="2"/>
+        <Image Source="/NotesPlayer;component/Resources/S_6904060176143.jpg" Stretch="UniformToFill" Grid.RowSpan="2"/>
         <Grid x:Name="ParentSongs" Margin="72,10,227,10" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

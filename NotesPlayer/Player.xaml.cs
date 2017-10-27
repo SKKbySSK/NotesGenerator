@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Reactive.Bindings;
+using NotesPlayer.Extensions;
 
 namespace NotesPlayer
 {
@@ -95,6 +96,19 @@ namespace NotesPlayer
             {
                 player = new MusicPlayer(Directory,
                     Music, new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 10));
+
+                System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(1000);
+                timer.Tick += (sender, e) =>
+                {
+                    if(player.Position.TotalMilliseconds > player.Duration.TotalMilliseconds / 2)
+                    {
+                        SkyI.AnimateOpacity(0);
+                        timer.Stop();
+                        return;
+                    }
+                };
+                timer.Start();
             }
             catch (Exception ex)
             {

@@ -82,6 +82,8 @@ namespace NotesPlayer
         MediaFoundationReader reader;
         FadeInOutSampleProvider fade;
         WaveChannel32 vol;
+        Task task;
+        bool dis = false;
 
         public AudioPlayer(string Path)
         {
@@ -119,10 +121,12 @@ namespace NotesPlayer
             reader.CurrentTime = From;
             FadeIn(500);
             wout.Play();
-            Task.Run(() =>
+            task = Task.Run(() =>
             {
-                while (reader.CurrentTime < To) ;
-                FadeOut(500);
+                while (reader.CurrentTime < To && !dis) ;
+
+                if (!dis)
+                    FadeOut(500);
             });
         }
 
@@ -133,6 +137,8 @@ namespace NotesPlayer
 
         public void Dispose()
         {
+            dis = true;
+            task?.Wait();
             wout.Dispose();
             wout = null;
             reader.Dispose();

@@ -61,7 +61,7 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Grid ClipToBounds="True">
-        <Image Stretch="UniformToFill" Source="/NotesPlayer;component/Resources/Image_fc19399.jpg"/>
+        <Image Stretch="UniformToFill" Source="/NotesPlayer;component/Resources/S_6904059668345.jpg"/>
         <Grid x:Name="DifSelectG">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
