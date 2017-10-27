@@ -67,7 +67,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <local:ImageButton x:Name="HardB" Grid.Column="0" Margin="10" Image="106.jpg" Text="Hard" Clicked="HardB_Clicked" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" RenderTransformOrigin="0.5,0.5">
+            <local:ImageButton x:Name="HardB" Grid.Column="0" Margin="10" Image="/NotesPlayer;component/Resources/HardThumb.png" Background="White" Text="上級者向け" Clicked="HardB_Clicked" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" RenderTransformOrigin="0.5,0.5">
                 <local:ImageButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -78,7 +78,7 @@
                 </local:ImageButton.RenderTransform>
             </local:ImageButton>
             <Rectangle x:Name="HardR" Fill="#99000000" MouseLeftButtonDown="HardR_MouseLeftButtonDown"/>
-            <local:ImageButton x:Name="NormalB" Margin="10,10,9,10" Image="106.jpg" Text="Normal" Clicked="NormalB_Clicked" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+            <local:ImageButton x:Name="NormalB" Margin="10,10,9,10" Image="/NotesPlayer;component/Resources/NormalThumb.png" Background="White" Text="音ゲー経験者向け" Clicked="NormalB_Clicked" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
                 <local:ImageButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -89,7 +89,7 @@
                 </local:ImageButton.RenderTransform>
             </local:ImageButton>
             <Rectangle x:Name="NormalR" Fill="#99000000" MouseLeftButtonDown="NormalR_MouseLeftButtonDown" Grid.Column="1"/>
-            <local:ImageButton x:Name="EasyB" Margin="10,10,9,10" Image="106.jpg" Text="Easy" Clicked="EasyB_Clicked" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" RenderTransformOrigin="0.5,0.5" Grid.Column="2">
+            <local:ImageButton x:Name="EasyB" Margin="10,10,9,10" Image="/NotesPlayer;component/Resources/EasyThumb.png" Background="White" Text="音ゲー初心者向け" Clicked="EasyB_Clicked" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" RenderTransformOrigin="0.5,0.5" Grid.Column="2">
                 <local:ImageButton.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -102,7 +102,7 @@
             <Rectangle x:Name="EasyR" Fill="#99000000" Margin="0,0,1,0" MouseLeftButtonDown="EasyR_MouseLeftButtonDown" Grid.Column="2"/>
         </Grid>
         <Grid x:Name="DropInputG" Height="60" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="0,-60,0,0">
-            <Label Content="名前" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,10" Width="133" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Content="名前" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,10" Width="133" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBox x:Name="NameT" Margin="148,10,167,10" TextWrapping="Wrap" VerticalContentAlignment="Center" FontSize="20"/>
             <Button Content="プレイ" Margin="0,10,10,10" HorizontalAlignment="Right" Width="152" FontSize="20" Click="Button_Click"/>
         </Grid>

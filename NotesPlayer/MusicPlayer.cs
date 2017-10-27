@@ -15,7 +15,7 @@ namespace NotesPlayer
     {
         public event EventHandler PlaybackStateChanged;
 
-        public const int Latency = 50;
+        public const int Latency = 10;
         
         private MediaFoundationReader reader;
         private IWavePlayer output;

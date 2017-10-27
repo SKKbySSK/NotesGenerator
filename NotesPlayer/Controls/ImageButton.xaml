@@ -41,7 +41,7 @@
             <RowDefinition Height="5*"/>
             <RowDefinition x:Name="LabelRow"/>
         </Grid.RowDefinitions>
-        <Label x:Name="LabelV" FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="LabelV" FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource DifficultyBrush}"/>
         <Image x:Name="ImageV"/>
 
     </Grid>

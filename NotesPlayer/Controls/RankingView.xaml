@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotesPlayer.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-        <ScrollViewer Margin="45,0">
+        <ScrollViewer Margin="45,0,150,0" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="RankStack"/>
         </ScrollViewer>
 
+        <local:ImageButton VerticalAlignment="Center" EnableAnimation="True" Clicked="ImageButton_Clicked"  Image="/NotesPlayer;component/Resources/next-page.png" IsLabelHidden="True" Height="160" Margin="0,220,10,220" HorizontalAlignment="Right" Width="135"/>
     </Grid>
 </UserControl>

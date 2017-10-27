@@ -95,13 +95,12 @@ namespace NotesPlayer
             {
                 CurrentSet.ReadyToPlay();
                 SetView(CurrentSet.PlayerView.Value);
+                string path = (string)Navigate.Parameters[Constants.NavMusicFileKey];
+                SugaEngine.Music music = (SugaEngine.Music)Navigate.Parameters[Constants.NavMusicKey];
+                CurrentSet.PlayerView.Value.SetMusic(System.IO.Path.GetDirectoryName(path), music, e.Difficulty);
                 FadeIn(() =>
                 {
                     CurrentSet.PlayerView.Value.Finished += Value_Finished;
-
-                    string path = (string)Navigate.Parameters[Constants.NavMusicFileKey];
-                    SugaEngine.Music music = (SugaEngine.Music)Navigate.Parameters[Constants.NavMusicKey];
-                    CurrentSet.PlayerView.Value.SetMusic(System.IO.Path.GetDirectoryName(path), music);
                 });
             });
         }
@@ -111,11 +110,13 @@ namespace NotesPlayer
             CurrentSet.PlayerView.Value.Finished -= Value_Finished;
             FadeOut(() =>
             {
+                int combo = (int)Navigate.Parameters[Constants.NavComboKey];
                 CurrentSet.ResultView.Value.PerfectCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Perfect).Count();
                 CurrentSet.ResultView.Value.GreatCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Great).Count();
                 CurrentSet.ResultView.Value.HitCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Hit).Count();
                 CurrentSet.ResultView.Value.FailedCount.Value = e.Judged.Where((j) => j.Item1 == NoteJudgement.Failed).Count();
                 CurrentSet.ResultView.Value.Score.Value = e.Score;
+                CurrentSet.ResultView.Value.Combo.Value = combo;
                 SetView(CurrentSet.ResultView.Value);
 
                 var res = new Ranking.Result()
@@ -124,7 +125,8 @@ namespace NotesPlayer
                     SgSongFile = System.IO.Path.GetFileName((string)Navigate.Parameters[Constants.NavMusicFileKey]),
                     Score = e.Score,
                     UserName = (string)Navigate.Parameters[Constants.NavUserNameKey],
-                    Registered = DateTime.Now
+                    Registered = DateTime.Now,
+                    MaxCombo = combo
                 };
 
                 Navigate.Parameters[Constants.NavResult] = res;

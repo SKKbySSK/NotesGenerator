@@ -85,7 +85,7 @@ namespace NotesPlayer
 
             System.IO.MemoryStream ms = new System.IO.MemoryStream(memory);
             RawSourceWaveStream raws = new RawSourceWaveStream(ms, format);
-            player = new DirectSoundOut(50);
+            player = new DirectSoundOut(10);
             player.Init(raws);
             raws.CurrentTime = new TimeSpan();
             player.Play();

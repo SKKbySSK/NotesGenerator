@@ -11,6 +11,7 @@ namespace NotesPlayer.Ranking
         public string SgSongFile { get; set; }
         public string UserName { get; set; }
         public int Score { get; set; }
+        public int MaxCombo { get; set; }
         public Difficulty Difficulty { get; set; }
         public DateTime Registered { get; set; }
     }

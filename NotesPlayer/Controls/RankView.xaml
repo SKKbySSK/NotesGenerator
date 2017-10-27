@@ -5,11 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotesPlayer.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="700" Height="100">
-    <Grid>
-        <Label x:Name="ScoreT" Content="150000" Margin="95,0,10,0" VerticalAlignment="Bottom" Height="50" FontSize="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="RankT" Content="1" HorizontalAlignment="Left" Margin="10,10,0,10" Width="80" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="40"/>
-        <Label x:Name="NameT" Content="Name" Margin="95,0,10,0" VerticalAlignment="Top" Height="50" FontSize="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+             d:DesignHeight="100" d:DesignWidth="900" Height="100">
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="FirstBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFFFAD25" Offset="0"/>
+            <GradientStop Color="#FFFFF600" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SecondBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFEBEBEB" Offset="0"/>
+            <GradientStop Color="#FFC5C5C5" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ThirdBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFFFA600" Offset="0"/>
+            <GradientStop Color="#FF452B1A" Offset="1"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="RankBrush" Color="White"/>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid x:Name="LabParent">
+            <Label x:Name="ScoreT" Content="150000" Margin="0,0,170,0" FontSize="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Right" Width="196" Foreground="{DynamicResource RankViewBrush}"/>
+            <Label x:Name="RankT" Content="1" HorizontalAlignment="Left" Margin="10,10,0,10" Width="80" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="40" Foreground="{DynamicResource RankViewBrush}"/>
+            <Label x:Name="NameT" Content="Name" Margin="95,0,366,0" FontSize="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource RankViewBrush}"/>
+            <Label x:Name="ComboT" Content="100" Margin="0,0,10,0" FontSize="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Right" Width="160" Foreground="{DynamicResource RankViewBrush}"/>
 
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

@@ -30,6 +30,12 @@ namespace NotesPlayer
                     case "skip":
                         Instance.Skip = true;
                         break;
+                    case "rank":
+                        Instance.OverrideRank = true;
+                        break;
+                    default:
+                        Instance.Rank = arg;
+                        break;
                 }
             }
         }

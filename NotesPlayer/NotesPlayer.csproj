@@ -236,12 +236,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Controls\106.jpg" />
     <Resource Include="Resources\next-page.png" />
     <Resource Include="Resources\spider-web.png" />
-    <Content Include="SE\Perfect.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Resources\HardThumb.png" />
+    <Resource Include="Resources\NormalThumb.png" />
+    <Resource Include="Resources\StatupImage.png" />
+    <Resource Include="Resources\EasyThumb.png" />
+    <Resource Include="Resources\NoNormalThumb.png" />
+    <Resource Include="Resources\NoHardThumb.png" />
+    <Resource Include="Resources\NoEasyThumb.png" />
     <Content Include="SE\Perfect.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

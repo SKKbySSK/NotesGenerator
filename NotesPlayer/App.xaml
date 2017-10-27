@@ -9,6 +9,9 @@
         <SolidColorBrush x:Key="LaneBorderBrush" Color="Black"/>
         <SolidColorBrush x:Key="LaneFillBrush" Color="#AA000000"/>
         <SolidColorBrush x:Key="LanePressedFillBrush" Color="#CC000000"/>
+        <SolidColorBrush x:Key="TextBrush" Color="White"/>
+        <SolidColorBrush x:Key="RankViewBrush" Color="Black"/>
+        <SolidColorBrush x:Key="DifficultyBrush" Color="Black"/>
         <system:Double x:Key="LaneStrokeThickness">2</system:Double>
         
         <SolidColorBrush x:Key="NoteFillBrush" Color="Wheat"/>

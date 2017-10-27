@@ -50,9 +50,8 @@ namespace NotesPlayer.Controls
 
         List<MusicItem> Songs = new List<MusicItem>(new MusicItem[]
             {
-                new MusicItem(@"C:\Users\skkby\Desktop\Memories\Memories.sgsong"),
-                new MusicItem(@"C:\Users\skkby\Desktop\イリュージョニスタ\イリュージョニスタ！.sgsong"),
-                new MusicItem(@"C:\Users\skkby\Desktop\星織ユメミライ\1-01 星織ユメミライ.sgsong")
+                new MusicItem(@"C:\Users\Kaisei Sunaga\Desktop\キミの街へ\04 キミの街へ☆彡 Uplifting House Version.sgsong"),
+                new MusicItem(@"C:\Users\Kaisei Sunaga\Desktop\Fumen1\レコーディング.sgsong")
             });
 
         public MusicSelectionView()
@@ -62,12 +61,11 @@ namespace NotesPlayer.Controls
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 const double ItemHeight = 140;
-                double eh = ParentSongs.ActualHeight / ((Songs.Count * 2) - 1);
                 foreach (MusicItem mi in Songs)
                 {
                     MusicView mview = new MusicView();
                     mview.Title = mi.Music.Title;
-                    mview.Margin = new Thickness(0, eh, 0, 0);
+                    mview.Margin = new Thickness(0, 30, 0, 0);
                     mview.Height = ItemHeight;
                     mview.FontSize = 45;
                     mview.MouseLeftButtonDown += (sender, e) =>

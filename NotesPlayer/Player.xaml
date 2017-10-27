@@ -1,15 +1,30 @@
-﻿<UserControl x:Class="NotesPlayer.Player"
+﻿<UserControl
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotesPlayer"
+        xmlns:Controls="clr-namespace:NotesPlayer.Controls" x:Class="NotesPlayer.Player"
         mc:Ignorable="d"
-             d:DesignHeight="1080" d:DesignWidth="1920" Background="{DynamicResource BackgroundBrush}">
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <Image x:Key="EasyI" Source="/NotesPlayer;component/Resources/NoEasyThumb.png"/>
+        <Image x:Key="NormalI" Source="/NotesPlayer;component/Resources/NoNormalThumb.png"/>
+        <Image x:Key="HardI" Source="/NotesPlayer;component/Resources/NoHardThumb.png"/>
+    </UserControl.Resources>
     <Grid>
-        <local:NotesDropper x:Name="Dropper" Judged="Dropper_Judged"/>
-        <Label Content="{Binding Score.Value}" ContentStringFormat="{}{0:D6}" HorizontalAlignment="Right"
-               Margin="0,10,10,0" VerticalAlignment="Top" Height="109" Width="451" HorizontalContentAlignment="Right"
-               VerticalContentAlignment="Top" Foreground="#FF09FF79" FontSize="48"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="86*"/>
+            <RowDefinition Height="49*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <local:NotesDropper x:Name="Dropper" Judged="Dropper_Judged" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Label Content="{Binding Score.Value}" ContentStringFormat="Score:{0:D6}" HorizontalAlignment="Right"
+               Margin="0,10,10,0" VerticalAlignment="Top" Height="109" Width="640" HorizontalContentAlignment="Right"
+               VerticalContentAlignment="Top" FontSize="48" Grid.Column="1" Foreground="{DynamicResource TextBrush}"/>
+        <Label Content="{Binding Combo.Value}" ContentStringFormat="{}{0} Combo!" HorizontalAlignment="Left" FontSize="48" VerticalContentAlignment="Center"  Margin="10,10,0,0" VerticalAlignment="Top" Height="109" Width="460" Grid.ColumnSpan="2" Foreground="{DynamicResource TextBrush}" Background="{x:Null}"/>
     </Grid>
 </UserControl>

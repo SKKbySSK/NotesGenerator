@@ -24,6 +24,22 @@ namespace NotesPlayer.Controls
         {
             InitializeComponent();
             RankT.Content = Rank;
+
+            switch (Rank)
+            {
+                case 1:
+                    LabParent.Background = (Brush)Resources["FirstBrush"];
+                    break;
+                case 2:
+                    LabParent.Background = (Brush)Resources["SecondBrush"];
+                    break;
+                case 3:
+                    LabParent.Background = (Brush)Resources["ThirdBrush"];
+                    break;
+                default:
+                    LabParent.Background = (Brush)Resources["RankBrush"];
+                    break;
+            }
         }
 
         Ranking.Result res = null;
@@ -35,6 +51,7 @@ namespace NotesPlayer.Controls
                 res = value;
                 NameT.Content = res.UserName;
                 ScoreT.Content = res.Score;
+                ComboT.Content = res.MaxCombo;
             }
         }
     }

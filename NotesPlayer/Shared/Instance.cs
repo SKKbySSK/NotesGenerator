@@ -10,5 +10,7 @@ namespace NotesPlayer
     {
         public static bool FullAutomatic { get; set; } = false;
         public static bool Skip { get; set; } = false;
+        public static bool OverrideRank { get; set; } = false;
+        public static string Rank { get; set; } = null;
     }
 }

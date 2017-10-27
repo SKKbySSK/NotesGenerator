@@ -33,15 +33,26 @@ namespace NotesPlayer.Controls
         {
             RankStack.Children.Clear();
 
-            var ordered = Ranking.Saved.Results.OrderByDescending((r) => r.Score);
-            int i = 1;
+            Ranking.Result cur = (Ranking.Result)Navigate.Parameters[Constants.NavResult];
+            var ordered = Ranking.Saved.Results.Where((r) => cur.SgSongFile == r.SgSongFile).OrderByDescending((r) => r.Score);
+            int i = 0, last = -1;
             foreach(var res in ordered)
             {
+                if (res.Score != last)
+                    i++;
+
                 RankView rankView = new RankView(i);
                 rankView.Result = res;
                 RankStack.Children.Add(rankView);
-                i++;
+                last = res.Score;
+
+
             }
+        }
+
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

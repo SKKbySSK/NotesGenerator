@@ -14,7 +14,7 @@ namespace NotesGenerator
     {
         public event EventHandler PlaybackStateChanged;
 
-        public const int Latency = 50;
+        public const int Latency = 10;
 
         public event EventHandler<FFT.FourierEventArgs> FftFinished;
 
@@ -38,10 +38,10 @@ namespace NotesGenerator
             Equalizer eq = new Equalizer(new SampleChannel(reader));
             eq.Enabled = false;
 
-            fft = new FFT.SampleProvider(eq);
-            fft.FftFinished += Fft_FftFinished;
+            //fft = new FFT.SampleProvider(eq);
+            //fft.FftFinished += Fft_FftFinished;
 
-            speed = new SoundTouch.VarispeedSampleProvider(fft, Latency, new SoundTouch.SoundTouchProfile(false, true));
+            speed = new SoundTouch.VarispeedSampleProvider(eq, Latency, new SoundTouch.SoundTouchProfile(false, true));
             speed.PlaybackRate = 0.4f;
 
             output.Init(speed);
@@ -81,7 +81,7 @@ namespace NotesGenerator
             reader.Dispose();
             output.Dispose();
             speed.Dispose();
-            fft.Dispose();
+            //fft.Dispose();
         }
 
         public float Rate

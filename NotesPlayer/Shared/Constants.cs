@@ -27,6 +27,7 @@ namespace NotesPlayer
         public const string NavDifficulty = "DIFFICULT";
         public const string NavSgSongPath = "SGSONG";
         public const string NavResult = "RESULT";
+        public const string NavComboKey = "COMBO";
 
         public const string NormalSgSongName = "_Normal.sgsong";
         public const string EasySgSongName = "_Easy.sgsong";

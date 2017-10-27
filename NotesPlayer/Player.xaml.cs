@@ -42,6 +42,7 @@ namespace NotesPlayer
         }
 
         public ReactiveProperty<int> Score { get; } = new ReactiveProperty<int>(0);
+        public ReactiveProperty<int> Combo { get; } = new ReactiveProperty<int>(0);
         private List<(NoteJudgement, SugaEngine.Note)> JudgedList { get; } = new List<(NoteJudgement, SugaEngine.Note)>();
         double actScore { get; set; } = 0;
 
@@ -55,11 +56,30 @@ namespace NotesPlayer
         {
         }
 
-        public void SetMusic(string Directory, SugaEngine.Music Music)
+        public void SetMusic(string Directory, SugaEngine.Music Music, Difficulty Difficulty)
         {
+            Navigate.Parameters[Constants.NavComboKey] = 0;
+            Image img = null;
+            switch (Difficulty)
+            {
+                case Difficulty.Easy:
+                    img = (Image)Resources["EasyI"];
+                    break;
+                case Difficulty.Normal:
+                    img = (Image)Resources["NormalI"];
+                    break;
+                case Difficulty.Hard:
+                    img = (Image)Resources["HardI"];
+                    break;
+            }
+            Grid.SetColumn(img, 0);
+            Grid.SetRow(img, 1);
+            ((Grid)Content).Children.Insert(1, img);
+
             JudgedList.Clear();
             actScore = 0;
             Score.Value = 0;
+            Combo.Value = 0;
             if (player != null)
             {
                 player.PlaybackStateChanged -= Player_PlaybackStateChanged;
@@ -108,18 +128,31 @@ namespace NotesPlayer
 
         private void Dropper_Judged(object sender, JudgementEventArgs e)
         {
+            int mCombo = (int)Navigate.Parameters[Constants.NavComboKey];
             switch (e.Judgement)
             {
                 case NoteJudgement.Perfect:
                     actScore += perfectScore;
+                    Combo.Value++;
                     break;
                 case NoteJudgement.Great:
                     actScore += greatScore;
+                    Combo.Value++;
                     break;
                 case NoteJudgement.Hit:
                     actScore += hitScore;
+                    Combo.Value = 0;
+                    break;
+                case NoteJudgement.Failed:
+                    Combo.Value = 0;
                     break;
             }
+
+            if(Combo.Value > mCombo)
+            {
+                Navigate.Parameters[Constants.NavComboKey] = Combo.Value;
+            }
+
             JudgedList.Add((e.Judgement, e.Note));
             Score.Value = (int)actScore;
         }

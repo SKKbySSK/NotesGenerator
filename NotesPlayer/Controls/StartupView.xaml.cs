@@ -26,8 +26,8 @@ namespace NotesPlayer.Controls
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Start?.Invoke(this, new EventArgs());
         }
