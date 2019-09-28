@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NotesPlayer"
         xmlns:Controls="clr-namespace:NotesPlayer.Controls" x:Class="NotesPlayer.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1067.411" Width="1559.502" WindowStyle="None" WindowState="Maximized" Topmost="False" Background="#FF545454">
+        Title="MainWindow" Height="1067.411" Width="1559.502" WindowState="Maximized" Topmost="False" Background="#FF545454">
     <Grid>
         <Rectangle x:Name="FadeR" Fill="Black" d:IsHidden="True"/>
     </Grid>

@@ -51,6 +51,7 @@ namespace NotesPlayer
         public MainWindow()
         {
             InitializeComponent();
+            WindowStyle = Instance.WindowStyle;
             Loaded += (sender, e) => BeginGaming();
         }
 
