@@ -45,7 +45,7 @@ namespace NotesGenerator
             get { return _song; }
         }
 
-        private bool SetSong(string Path)
+        internal bool SetSong(string Path)
         {
             Preview.Value = false;
             Recording.Value = false;
@@ -174,13 +174,6 @@ namespace NotesGenerator
                 return;
             }
 
-            int bpm = 0;
-            if (!int.TryParse(BPMT.Text, out bpm))
-            {
-                System.Windows.Forms.MessageBox.Show("BPMを正しく取得できませんでした。数字以外の文字列がないか確認してください");
-                return;
-            }
-
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.Description = "譜面の保存先を選択してください。中のファイルは自動で上書きされます";
             if(fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -190,69 +183,11 @@ namespace NotesGenerator
 
                 Music music = new Music();
                 music.Title = TitleT.Text;
-                music.BPM = bpm;
                 music.Notes = TempNotes;
                 Notes.Serialize(music, path, fbd.SelectedPath);
 
                 SetSong(path);
             }
-        }
-
-        private void SongRefB_Click(object sender, RoutedEventArgs e)
-        {
-            if(TempNotes.Count > 0)
-            {
-                if (System.Windows.MessageBox.Show("まだ作業中のデータがありますが続行しますか？" +
-                    "\n未保存のデータは削除されます",
-                    "警告", MessageBoxButton.YesNo) == MessageBoxResult.No)
-                    return;
-            }
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "音楽ファイル|*.mp3;*.wav;*.flac;*.m4a|全てのファイル|*.*";
-            ofd.FileName = "";
-            if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                TempNotes.Clear();
-                if (!SetSong(ofd.FileName))
-                    return;
-
-                SongPathT.Text = ofd.FileName;
-
-                RWTag.TagReader reader = new RWTag.TagReader();
-                using(FileStream fs = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read))
-                {
-                    RWTag.Tag tag = reader.GetTag(fs, System.IO.Path.GetExtension(ofd.FileName));
-                    TitleT.Text = tag.Title ?? System.IO.Path.GetFileNameWithoutExtension(ofd.FileName);
-                }
-            }
-        }
-
-        private void LoadB_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Suga Songファイル|*.sgsong";
-            ofd.FileName = "";
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Music music = LoadMusicFromFile(ofd.FileName);
-                TitleT.Text = music.Title;
-                BPMT.Text = music.BPM.ToString();
-
-                TempNotes.Clear();
-                foreach (Note note in music.Notes)
-                    TempNotes.Add(note);
-
-                string audio = System.IO.Path.GetDirectoryName(ofd.FileName) + music.Song;
-                SetSong(audio);
-
-                SongPathT.Text = audio;
-            }
-        }
-
-        private Music LoadMusicFromFile(string FilePath)
-        {
-            Music music = Notes.Deserialize(FilePath);
-            return music;
         }
 
         private void PPB_Click(object sender, RoutedEventArgs e)
@@ -418,6 +353,7 @@ namespace NotesGenerator
             if(Player != null)
             {
                 PosL.Content = Player.Position.ToString(@"mm\:ss");
+                PosMsL.Content = Player.Position.TotalMilliseconds + "ms";
                 if (!changing)
                     Player.Position = TimeSpan.FromMilliseconds(SeekBarS.Value);
             }
@@ -627,6 +563,11 @@ namespace NotesGenerator
                     SelectedNotes[0].Lane = LaneC.SelectedIndex;
                 }
             }
+        }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

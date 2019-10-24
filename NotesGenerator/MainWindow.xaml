@@ -7,21 +7,18 @@
         xmlns:vms="clr-namespace:NotesGenerator.VMs"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="630.842" MinHeight="550" Width="747.795" MinWidth="420" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" Closing="Window_Closing">
+        Title="MainWindow" Height="583" MinHeight="550" Width="924.795" MinWidth="420" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" Closing="Window_Closing">
     <Window.Resources>
         <local:InverseBooleanConverter x:Key="InvBool"/>
     </Window.Resources>
     <Grid>
-        <TextBox x:Name="TitleT" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Height="23" Margin="10,36,90,0" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TitleT" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Height="23" Margin="10,36,10,0" TextWrapping="NoWrap" VerticalAlignment="Top"/>
         <Label Content="タイトル" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="SongPathT" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Height="23" Margin="10,95,190,0" TextWrapping="NoWrap" VerticalAlignment="Top" IsReadOnly="True"/>
-        <Label Content="音楽" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="SongRefB" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Content="ファイルを参照" HorizontalAlignment="Right" Margin="0,95,10,0" VerticalAlignment="Top" Width="175" Height="23" Click="SongRefB_Click"/>
-        <Label Content="BPM" HorizontalAlignment="Right" Margin="0,10,51,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="BPMT" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Height="23" Margin="0,36,10,0" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="ExportB" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Content="保存" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="85" Height="24" Click="ExportB_Click"/>
-        <Button x:Name="LoadB" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Content="読み込み" HorizontalAlignment="Right" Margin="0,0,10,39" VerticalAlignment="Bottom" Width="85" Height="24" Click="LoadB_Click"/>
-        <Grid x:Name="TempoParent" Margin="0,195,0,0" Height="132" VerticalAlignment="Top" HorizontalAlignment="Center" Width="487">
+        <Button x:Name="ExportB" IsEnabled="{Binding DisableControls.Value, Converter={StaticResource InvBool}}" Content="保存" HorizontalAlignment="Right" Margin="0,0,10,39" VerticalAlignment="Bottom" Width="119" Height="51" Click="ExportB_Click"/>
+        <Grid x:Name="TempoParent" Margin="214,131,215,0" Height="132" VerticalAlignment="Top" HorizontalAlignment="Center" Width="488">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="100"/>
@@ -43,10 +40,10 @@
                 <Button x:Name="FftB" Content="FFT" Height="28" Click="FftB_Click" IsEnabled="False"/>
             </StackPanel>
         </Grid>
-        <Slider x:Name="SeekBarS" Margin="10,133,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ValueChanged="SeekBarS_ValueChanged"/>
-        <Label x:Name="PosL" Content="00:00" HorizontalAlignment="Right" Margin="0,133,10,0" VerticalAlignment="Top"/>
+        <Slider x:Name="SeekBarS" Margin="10,69,134,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ValueChanged="SeekBarS_ValueChanged"/>
+        <Label x:Name="PosL" Content="00:00" HorizontalAlignment="Right" Margin="0,64,85,0" VerticalAlignment="Top" Height="29" Width="44" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button x:Name="PPB" Content="再生/一時停止" HorizontalAlignment="Right" Margin="0,236,10,0" VerticalAlignment="Top" Width="119" Height="26" Click="PPB_Click" Visibility="Collapsed"/>
-        <ListView x:Name="NotesListView" Margin="10,359,10.286,68.286" ItemsSource="{Binding TempNotes}" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="NotesListView" Margin="10,268,134,41" ItemsSource="{Binding TempNotes}" SelectionChanged="ListView_SelectionChanged">
             <ListView.ContextMenu>
                 <ContextMenu x:Name="NotesMenu">
                     <MenuItem IsEnabled="False" x:Name="RemoveNoteItem" Header="削除" Click="RemoveNoteItem_Click"/>
@@ -60,23 +57,25 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Slider x:Name="PRateS" Margin="106,164,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Maximum="3" Minimum="0.1" Value="1" ValueChanged="PRateS_ValueChanged"/>
-        <Label Content="{Binding ElementName=PRateS, Path=Value}" Margin="68,162,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" HorizontalContentAlignment="Center"/>
-        <Button x:Name="PreviewB" Content="プレビュー開始/停止" HorizontalAlignment="Left" Margin="10,0,0,39" VerticalAlignment="Bottom" Width="145" Height="24" Click="PreviewB_Click"/>
-        <Button x:Name="UsePreviewerB" Content="高度なプレビュー" HorizontalAlignment="Left" Margin="160,0,0,39" VerticalAlignment="Bottom" Width="133" Height="24" Click="UsePreviewerB_Click"/>
-        <Button x:Name="ChartB" Content="波形表示" HorizontalAlignment="Left" Margin="298,0,0,39" VerticalAlignment="Bottom" Width="109" Height="24" Click="ChartB_Click"/>
-        <Label Content="再生速度" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Height="31" Width="58" VerticalContentAlignment="Center"/>
-        <Button x:Name="ResetRateB" Content="リセット" Margin="0,162,10,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Right" Width="47" Click="ResetRateB_Click"/>
-        <Label Content="{Binding ElementName=NotesListView, Path=Items.Count}" ContentStringFormat="{}ノーツ:{0}個" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,300,10,0" VerticalAlignment="Top" Width="85"/>
-        <ComboBox x:Name="LaneC" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="49,327,0,0" VerticalAlignment="Top" Width="79" Height="26" SelectionChanged="ComboBox_SelectionChanged">
+        <Slider x:Name="PRateS" Margin="106,100,62,0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Maximum="3" Minimum="0.1" Value="1" ValueChanged="PRateS_ValueChanged"/>
+        <Label Content="{Binding ElementName=PRateS, Path=Value}" Margin="68,98,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" HorizontalContentAlignment="Center"/>
+        <Button x:Name="PreviewB" Content="プレビュー開始/停止" HorizontalAlignment="Right" Margin="0,0,10,146" VerticalAlignment="Bottom" Width="119" Height="34" Click="PreviewB_Click"/>
+        <Button x:Name="UsePreviewerB" Content="高度なプレビュー" HorizontalAlignment="Right" Margin="0,0,10,107" VerticalAlignment="Bottom" Width="119" Height="34" Click="UsePreviewerB_Click"/>
+        <Button x:Name="ChartB" Visibility="Collapsed" Content="波形表示" HorizontalAlignment="Left" Margin="298,0,0,39" VerticalAlignment="Bottom" Width="109" Height="24" Click="ChartB_Click"/>
+        <Label Content="再生速度" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Height="31" Width="58" VerticalContentAlignment="Center"/>
+        <Button x:Name="ResetRateB" Content="リセット" Margin="0,98,10,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Right" Width="47" Click="ResetRateB_Click"/>
+        <Label Content="{Binding ElementName=NotesListView, Path=Items.Count}" ContentStringFormat="{}ノーツ:{0}個" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Margin="0,0,134,10" VerticalAlignment="Bottom" Width="85"/>
+        <ComboBox x:Name="LaneC" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="52,0,0,10" VerticalAlignment="Bottom" Width="80" Height="26" SelectionChanged="ComboBox_SelectionChanged">
             <sys:Int32>0</sys:Int32>
             <sys:Int32>1</sys:Int32>
             <sys:Int32>2</sys:Int32>
             <sys:Int32>3</sys:Int32>
             <sys:Int32>4</sys:Int32>
         </ComboBox>
-        <Label Content="レーン" HorizontalAlignment="Left" Margin="10,327,0,0" VerticalAlignment="Top"/>
-        <Label Content="時間" HorizontalAlignment="Left" Margin="133,327,0,0" VerticalAlignment="Top" Width="44"/>
-        <TextBox x:Name="millisecT" HorizontalAlignment="Left" Height="26" Margin="177,327,0,0" TextWrapping="Wrap" Text="0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="182" PreviewTextInput="millisecT_PreviewTextInput"/>
+        <Label Content="レーン" HorizontalAlignment="Left" Margin="14,0,0,10" VerticalAlignment="Bottom"/>
+        <Label Content="時間" HorizontalAlignment="Left" Margin="136,0,0,10" VerticalAlignment="Bottom" Width="44"/>
+        <TextBox x:Name="millisecT" HorizontalAlignment="Left" Height="26" Margin="180,0,0,10" TextWrapping="Wrap" Text="0" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Width="101" PreviewTextInput="millisecT_PreviewTextInput"/>
+        <Label Content="ms" HorizontalAlignment="Left" Margin="286,0,0,10" VerticalAlignment="Bottom"/>
+        <Label x:Name="PosMsL" Content="0ms" HorizontalAlignment="Right" Margin="0,64,10,0" VerticalAlignment="Top" Height="29" Width="70" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>
