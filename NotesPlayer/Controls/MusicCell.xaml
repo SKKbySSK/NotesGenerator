@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:NotesPlayer.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#B2000000" Margin="20">
+    <Grid x:Name="grid" Background="#B2000000" Margin="20">
         <Label x:Name="label" HorizontalAlignment="Stretch" FontSize="25" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="White"/>
     </Grid>
 </UserControl>

@@ -25,6 +25,7 @@ namespace NotesPlayer.Controls
         public StartupView()
         {
             InitializeComponent();
+            image.Source = BackgroundImageManager.GetStartupImage();
         }
         
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

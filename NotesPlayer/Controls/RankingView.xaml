@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-        <Image Source="/NotesPlayer;component/Resources/Image_e25e30b.jpg" Stretch="UniformToFill"/>
+        <Image x:Name="image" Stretch="UniformToFill"/>
         <ScrollViewer Margin="45,10,150,10" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="RankStack"/>
         </ScrollViewer>

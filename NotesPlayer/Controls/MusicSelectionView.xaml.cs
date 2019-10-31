@@ -38,16 +38,32 @@ namespace NotesPlayer.Controls
         public MusicSelectionView()
         {
             InitializeComponent();
+            image.Source = BackgroundImageManager.GetMusicSelectionImage();
 
             string directory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
             System.IO.Directory.CreateDirectory(directory);
 
-            foreach(var musicDir in System.IO.Directory.EnumerateDirectories(directory))
+            foreach (var musicDir in System.IO.Directory.EnumerateDirectories(directory))
             {
                 string musicName = System.IO.Path.GetFileName(musicDir);
                 string easy = System.IO.Path.Combine(musicDir, "easy.sgsong");
                 string normal = System.IO.Path.Combine(musicDir, "normal.sgsong");
                 string hard = System.IO.Path.Combine(musicDir, "hard.sgsong");
+
+                if (!System.IO.File.Exists(easy))
+                {
+                    easy = null;
+                }
+
+                if (!System.IO.File.Exists(normal))
+                {
+                    normal = null;
+                }
+
+                if (!System.IO.File.Exists(hard))
+                {
+                    hard = null;
+                }
 
                 try
                 {
@@ -71,8 +87,8 @@ namespace NotesPlayer.Controls
         private void Cell_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var cell = (MusicCell)sender;
-            cell.Background = (Brush)Resources["SelectedBrush"];
-            cell.Background = (Brush)Resources["DefaultBrush"];
+            cell.grid.Background = (Brush)Resources["SelectedBrush"];
+            cell.grid.Background = (Brush)Resources["DefaultBrush"];
             current = cell.Music;
 
             InitPlayer(current.MusicFile);

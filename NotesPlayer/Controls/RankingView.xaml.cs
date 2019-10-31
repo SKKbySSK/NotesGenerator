@@ -25,6 +25,7 @@ namespace NotesPlayer.Controls
         public RankingView()
         {
             InitializeComponent();
+            image.Source = BackgroundImageManager.GetScoreImage();
             UpdateRank();
             MouseLeftButtonDown += (sender, e) => Dismissed?.Invoke(this, new EventArgs());
         }

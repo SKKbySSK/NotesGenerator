@@ -65,7 +65,7 @@ namespace NotesPlayer
 
             Navigate.Parameters.Clear();
             CurrentSet = new ControlsSet();
-            AudioPlayer = new AudioPlayer("BGM.wav");
+            AudioPlayer = new AudioPlayer("SE/BGM.wav");
             AudioPlayer.Volume = 0.1f;
             AudioPlayer.Play();
 
@@ -93,6 +93,7 @@ namespace NotesPlayer
             FadeOut(() =>
             {
                 CurrentSet.DifficultyView.Value.Ready += Value_Ready;
+                CurrentSet.DifficultyView.Value.RefreshDifficulty(e.Music);
                 SetView(CurrentSet.DifficultyView.Value);
                 FadeIn();
             });

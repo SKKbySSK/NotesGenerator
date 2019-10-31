@@ -29,7 +29,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Image Source="/NotesPlayer;component/Resources/Image_e25e30b.jpg" Grid.RowSpan="6" Stretch="UniformToFill"/>
+        <Image x:Name="image" Grid.RowSpan="6" Stretch="UniformToFill"/>
         <Rectangle Fill="#7F000000" Grid.RowSpan="6"/>
         <JudgementLabels:Judge FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Margin="0,405,0,0" Width="237" Judgement="Perfect" Grid.RowSpan="2"/>
         <JudgementLabels:Judge FontSize="{DynamicResource CountSize}" HorizontalAlignment="Left" Margin="0,0,0,134.714" Width="232" Judgement="Great" Grid.Row="2" Grid.RowSpan="2"/>

@@ -90,6 +90,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AudioPlayer.cs" />
+    <Compile Include="BackgroundImageManager.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Controls\AnimatedLabel.xaml.cs">
       <DependentUpon>AnimatedLabel.xaml</DependentUpon>
@@ -256,29 +257,29 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\next-page.png" />
-    <Resource Include="Resources\spider-web.png" />
-    <Resource Include="Resources\HardThumb.png" />
-    <Resource Include="Resources\NormalThumb.png" />
-    <Resource Include="Resources\StatupImage.png" />
-    <Resource Include="Resources\EasyThumb.png" />
-    <Resource Include="Resources\NoNormalThumb.png" />
-    <Resource Include="Resources\NoHardThumb.png" />
-    <Resource Include="Resources\NoEasyThumb.png" />
-    <Content Include="BGM.wav">
+    <Content Include="System\FirstHalf.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Image_e25e30b.jpg" />
-    <Resource Include="Resources\Image_fc19399.jpg" />
-    <Resource Include="Resources\S_6904059668345.jpg">
+    <Content Include="System\Difficulty.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\S_6904059887943.jpg">
+    </Content>
+    <Content Include="System\SecondHalf.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\S_6904060176143.jpg">
+    </Content>
+    <Content Include="System\Score.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="System\Selection.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\next-page.png" />
+    <Resource Include="Resources\spider-web.png" />
+    <Content Include="System\Startup.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SE\BGM.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SE\Perfect.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

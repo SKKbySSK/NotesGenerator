@@ -33,7 +33,7 @@ namespace NotesPlayer.Controls
             set 
             {
                 music = value;
-                label.Content = value?.Easy.Title;
+                label.Content = value?.Title;
             }
         }
     }

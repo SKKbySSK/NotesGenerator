@@ -7,11 +7,6 @@
         xmlns:Controls="clr-namespace:NotesPlayer.Controls" x:Class="NotesPlayer.Player"
         mc:Ignorable="d"
              d:DesignHeight="1080" d:DesignWidth="1920">
-    <UserControl.Resources>
-        <Image x:Key="EasyI" Source="/NotesPlayer;component/Resources/NoEasyThumb.png"/>
-        <Image x:Key="NormalI" Source="/NotesPlayer;component/Resources/NoNormalThumb.png"/>
-        <Image x:Key="HardI" Source="/NotesPlayer;component/Resources/NoHardThumb.png"/>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="86*"/>
@@ -21,8 +16,8 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="Resources/Image_fc19399.jpg" Stretch="UniformToFill" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        <Image x:Name="SkyI" Source="Resources/S_6904059668345.jpg" Stretch="UniformToFill" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Image x:Name="secondHalfImage" Stretch="UniformToFill" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Image x:Name="firstHalfImage" Stretch="UniformToFill" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         <Label x:Name="SongL" Content="Label" Grid.Row="1" VerticalAlignment="Bottom" Height="107" Grid.ColumnSpan="2" FontSize="50" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Microsoft JhengHei Light" Background="#72000000"/>
         <local:NotesDropper x:Name="Dropper" Judged="Dropper_Judged" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         <Controls:AnimatedLabel x:Name="ScoreL" Score="0" ContentStringFormat="{}{0:D6}" HorizontalAlignment="Right"

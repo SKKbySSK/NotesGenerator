@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-        <Image Source="/NotesPlayer;component/Resources/StatupImage.png" Stretch="Fill"/>
+        <Image x:Name="image" Stretch="Fill"/>
         <Label Content="Icons : Designed by Freepik and distributed by Flaticon" Margin="10,0,10,10" VerticalAlignment="Bottom" Foreground="{DynamicResource TextBrush}" Background="#B2000000"/>
 
     </Grid>

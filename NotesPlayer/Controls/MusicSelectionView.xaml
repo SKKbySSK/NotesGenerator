@@ -11,7 +11,7 @@
         <SolidColorBrush x:Key="SelectedBrush" Color="#E5064444"/>
     </UserControl.Resources>
     <Grid>
-        <Image Source="/NotesPlayer;component/Resources/S_6904060176143.jpg" Stretch="UniformToFill" Grid.RowSpan="2"/>
+        <Image x:Name="image" Stretch="UniformToFill" Grid.RowSpan="2"/>
         <StackPanel Orientation="Vertical" x:Name="songsParent" Margin="72,0,227,0" VerticalAlignment="Center">
         </StackPanel>
         <local:ImageButton HorizontalAlignment="Right" VerticalAlignment="Center" EnableAnimation="True" Clicked="ImageButton_Clicked" Image="/NotesPlayer;component/Resources/next-page.png" IsLabelHidden="True" Width="192" Margin="0,220,30,220" Height="160" Grid.RowSpan="2"/>

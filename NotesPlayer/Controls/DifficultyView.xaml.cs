@@ -32,105 +32,40 @@ namespace NotesPlayer.Controls
     public partial class DifficultyView : UserControl
     {
         public event EventHandler<DifficultyEventArgs> Ready;
+        private Difficulty difficulty;
 
-        Difficulty? difficulty = null;
-
-        bool inputShown = false;
         public DifficultyView()
         {
             InitializeComponent();
+            image.Source = BackgroundImageManager.GetDifficultyImage();
+        }
 
-            Storyboard normal = ((Storyboard)Resources["HoldAnim"]).Clone();
-            foreach(var tl in normal.Children)
+        public void RefreshDifficulty(MusicHolder holder)
+        {
+            hardR.Visibility = Visibility.Collapsed;
+            normalR.Visibility = Visibility.Collapsed;
+            easyR.Visibility = Visibility.Collapsed;
+
+            if (holder.GetMusic(Difficulty.Hard) != null)
             {
-                Storyboard.SetTargetName(tl, "NormalB");
+                difficulty = Difficulty.Hard;
+                hardR.IsChecked = true;
+                hardR.Visibility = Visibility.Visible;
             }
-            NormalAnim_BeginStoryboard.Storyboard = normal;
-            Storyboard easy = ((Storyboard)Resources["HoldAnim"]).Clone();
-            foreach (var tl in easy.Children)
+
+            if (holder.GetMusic(Difficulty.Easy) != null)
             {
-                Storyboard.SetTargetName(tl, "EasyB");
+                difficulty = Difficulty.Easy;
+                easyR.IsChecked = true;
+                easyR.Visibility = Visibility.Visible;
             }
-            EasyAnim_BeginStoryboard.Storyboard = easy;
 
-            HardR.Opacity = 0;
-            HardR.Visibility = Visibility.Hidden;
-            NormalR.Opacity = 0;
-            NormalR.Visibility = Visibility.Hidden;
-            EasyR.Opacity = 0;
-            EasyR.Visibility = Visibility.Hidden;
-        }
-
-        private void HardB_Clicked(object sender, EventArgs e)
-        {
-            VisibleRects();
-            EasyR.AnimateOpacity(1);
-            NormalR.AnimateOpacity(1);
-            HardR.Visibility = Visibility.Hidden;
-            ShowInputAnimate();
-            difficulty = Difficulty.Hard;
-        }
-
-        private void NormalB_Clicked(object sender, EventArgs e)
-        {
-            VisibleRects();
-            HardR.AnimateOpacity(1);
-            EasyR.AnimateOpacity(1);
-            NormalR.Visibility = Visibility.Hidden;
-            ShowInputAnimate();
-            difficulty = Difficulty.Normal;
-        }
-
-        private void EasyB_Clicked(object sender, EventArgs e)
-        {
-            VisibleRects();
-            HardR.AnimateOpacity(1);
-            NormalR.AnimateOpacity(1);
-            EasyR.Visibility = Visibility.Hidden;
-            ShowInputAnimate();
-            difficulty = Difficulty.Easy;
-        }
-
-        void VisibleRects()
-        {
-            HardR.Visibility = Visibility.Visible;
-            NormalR.Visibility = Visibility.Visible;
-            EasyR.Visibility = Visibility.Visible;
-        }
-
-        private void HardR_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            VisibleRects();
-            NormalR.AnimateOpacity(1);
-            EasyR.AnimateOpacity(1);
-            HardR.AnimateOpacity(0, Completed: (element) => element.Visibility = Visibility.Hidden);
-            difficulty = Difficulty.Hard;
-        }
-
-        private void NormalR_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            VisibleRects();
-            HardR.AnimateOpacity(1);
-            EasyR.AnimateOpacity(1);
-            NormalR.AnimateOpacity(0, Completed: (element) => element.Visibility = Visibility.Hidden);
-            difficulty = Difficulty.Normal;
-        }
-
-        private void EasyR_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            VisibleRects();
-            HardR.AnimateOpacity(1);
-            NormalR.AnimateOpacity(1);
-            EasyR.AnimateOpacity(0, Completed: (element) => element.Visibility = Visibility.Hidden);
-            difficulty = Difficulty.Easy;
-        }
-
-        void ShowInputAnimate()
-        {
-            if (inputShown)
-                return;
-            ((Storyboard)Resources["ShowInput"]).Begin();
-            inputShown = true;
+            if (holder.GetMusic(Difficulty.Normal) != null)
+            {
+                difficulty = Difficulty.Normal;
+                normalR.IsChecked = true;
+                normalR.Visibility = Visibility.Visible;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -145,9 +80,22 @@ namespace NotesPlayer.Controls
 
             string uname = NameT.Text.TrimStart(' ', '　').TrimEnd(' ', '　');
             Navigate.Parameters[Constants.NavUserNameKey] = uname;
+            Ready?.Invoke(this, new DifficultyEventArgs(difficulty));
+        }
 
-            if (difficulty.HasValue)
-                Ready?.Invoke(this, new DifficultyEventArgs(difficulty.Value));
+        private void easyR_Checked(object sender, RoutedEventArgs e)
+        {
+            difficulty = Difficulty.Easy;
+        }
+
+        private void normalR_Checked(object sender, RoutedEventArgs e)
+        {
+            difficulty = Difficulty.Normal;
+        }
+
+        private void hardR_Checked(object sender, RoutedEventArgs e)
+        {
+            difficulty = Difficulty.Hard;
         }
     }
 }

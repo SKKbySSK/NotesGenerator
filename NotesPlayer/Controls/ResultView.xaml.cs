@@ -28,6 +28,7 @@ namespace NotesPlayer.Controls
         public ResultView()
         {
             InitializeComponent();
+            image.Source = BackgroundImageManager.GetScoreImage();
         }
         
         public void SetScore(int Score, int Combo, int Perfect, int Great, int Hit, int Failed)

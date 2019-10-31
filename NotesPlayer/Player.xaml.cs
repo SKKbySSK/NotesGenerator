@@ -59,23 +59,10 @@ namespace NotesPlayer
         public void SetMusic(MusicHolder holder, Difficulty difficulty)
         {
             Navigate.Parameters[Constants.NavComboKey] = 0;
-            Image img = null;
             SugaEngine.Music music = holder.GetMusic(difficulty);
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    img = (Image)Resources["EasyI"];
-                    break;
-                case Difficulty.Normal:
-                    img = (Image)Resources["NormalI"];
-                    break;
-                case Difficulty.Hard:
-                    img = (Image)Resources["HardI"];
-                    break;
-            }
-            Grid.SetColumn(img, 0);
-            Grid.SetRow(img, 1);
-            ((Grid)Content).Children.Insert(2, img);
+
+            firstHalfImage.Source = BackgroundImageManager.CreateImageSource(holder.FirstHalfImage);
+            secondHalfImage.Source = BackgroundImageManager.CreateImageSource(holder.SecondHalfImage);
 
             JudgedList.Clear();
             actScore = 0;
@@ -104,7 +91,7 @@ namespace NotesPlayer
                 {
                     if(player.Position.TotalMilliseconds > player.Duration.TotalMilliseconds / 2)
                     {
-                        SkyI.AnimateOpacity(0);
+                        firstHalfImage.AnimateOpacity(0);
                         timer.Stop();
                         return;
                     }

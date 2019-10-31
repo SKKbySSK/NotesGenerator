@@ -11,16 +11,39 @@ namespace NotesPlayer
     {
         public MusicHolder(string easy, string normal, string hard)
         {
-            ParentDirectory = System.IO.Path.GetDirectoryName(easy);
-            Easy = SugaEngine.Export.Notes.Deserialize(easy);
-            Normal = SugaEngine.Export.Notes.Deserialize(normal);
-            Hard = SugaEngine.Export.Notes.Deserialize(hard);
+            ParentDirectory = System.IO.Path.GetDirectoryName(easy ?? normal ?? hard);
+            Easy = easy != null ? SugaEngine.Export.Notes.Deserialize(easy) : null;
+            Normal = normal != null ? SugaEngine.Export.Notes.Deserialize(normal) : null;
+            Hard = hard != null ? SugaEngine.Export.Notes.Deserialize(hard) : null;
 
             EasyPath = easy;
             NormalPath = normal;
             HardPath = hard;
 
-            MusicFile = System.IO.Path.Combine(ParentDirectory, Easy.Song.TrimStart('/', '\\'));
+            var music = Easy ?? Normal ?? Hard;
+            Title = music.Title;
+            MusicFile = System.IO.Path.Combine(ParentDirectory, music.Song.TrimStart('/', '\\'));
+
+            var firstHalf = System.IO.Path.Combine(ParentDirectory, "first.png");
+            var secondHalf = System.IO.Path.Combine(ParentDirectory, "second.png");
+
+            if (System.IO.File.Exists(firstHalf))
+            {
+                FirstHalfImage = firstHalf;
+            }
+            else
+            {
+                FirstHalfImage = BackgroundImageManager.FirstHalfImagePath;
+            }
+
+            if (System.IO.File.Exists(secondHalf))
+            {
+                SecondHalfImage = secondHalf;
+            }
+            else
+            {
+                SecondHalfImage = BackgroundImageManager.SecondHalfImagePath;
+            }
         }
 
         public string ParentDirectory { get; }
@@ -32,6 +55,12 @@ namespace NotesPlayer
         public string HardPath { get; }
 
         public string MusicFile { get; }
+
+        public string Title { get; }
+
+        public string FirstHalfImage { get; }
+
+        public string SecondHalfImage { get; }
 
         public Music Easy { get; }
 
