@@ -21,11 +21,11 @@ namespace NotesPlayer
         private IWavePlayer output;
         private Music music;
         
-        public MusicPlayer(string Directory, Music Music, IWavePlayer Player)
+        public MusicPlayer(string music, Music notes, IWavePlayer Player)
         {
-            music = Music;
+            this.music = notes;
             output = Player;
-            reader = new MediaFoundationReader(Directory + Music.Song);
+            reader = new MediaFoundationReader(music);
             output.Init(reader);
             output.PlaybackStopped += Wasapi_PlaybackStopped;
         }

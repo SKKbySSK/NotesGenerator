@@ -94,6 +94,9 @@
     <Compile Include="Controls\AnimatedLabel.xaml.cs">
       <DependentUpon>AnimatedLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MusicCell.xaml.cs">
+      <DependentUpon>MusicCell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MusicSelectionView.xaml.cs">
       <DependentUpon>MusicSelectionView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,7 @@
       <DependentUpon>StartupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Difficulty.cs" />
+    <Compile Include="MusicHolder.cs" />
     <Compile Include="Ranking\Result.cs" />
     <Compile Include="Ranking\Saved.cs" />
     <Compile Include="Shared\Constants.cs" />
@@ -147,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MusicCell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -141,24 +141,9 @@ namespace NotesPlayer.Controls
                 return;
             }
 
-            string path = (string)Navigate.Parameters[Constants.NavMusicFileKey];
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    path = path.Replace(".sgsong", Constants.EasySgSongName);
-                    break;
-                case Difficulty.Normal:
-                    path = path.Replace(".sgsong", Constants.NormalSgSongName);
-                    break;
-            }
-            Navigate.Parameters[Constants.NavMusicFileKey] = path;
-            Navigate.Parameters[Constants.NavMusicKey] = SugaEngine.Export.Notes.Deserialize(path);
             Navigate.Parameters[Constants.NavDifficulty] = difficulty;
 
-            string fname = System.IO.Path.GetFileName(path);
             string uname = NameT.Text.TrimStart(' ', '　').TrimEnd(' ', '　');
-
-            Navigate.Parameters[Constants.NavSgSongPath] = fname;
             Navigate.Parameters[Constants.NavUserNameKey] = uname;
 
             if (difficulty.HasValue)

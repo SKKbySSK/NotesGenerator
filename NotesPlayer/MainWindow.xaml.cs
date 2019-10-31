@@ -88,7 +88,6 @@ namespace NotesPlayer
         private void Value_MusicSelected(object sender, Controls.SelectedEventArgs e)
         {
             Navigate.Parameters[Constants.NavMusicKey] = e.Music;
-            Navigate.Parameters[Constants.NavMusicFileKey] = e.SgSongPath;
 
             CurrentSet.SelectionView.Value.MusicSelected -= Value_MusicSelected;
             FadeOut(() =>
@@ -109,9 +108,8 @@ namespace NotesPlayer
                 AudioPlayer.Pause();
                 CurrentSet.ReadyToPlay();
                 SetView(CurrentSet.PlayerView.Value);
-                string path = (string)Navigate.Parameters[Constants.NavMusicFileKey];
-                SugaEngine.Music music = (SugaEngine.Music)Navigate.Parameters[Constants.NavMusicKey];
-                CurrentSet.PlayerView.Value.SetMusic(System.IO.Path.GetDirectoryName(path), music, e.Difficulty);
+                var holder = (MusicHolder)Navigate.Parameters[Constants.NavMusicKey];
+                CurrentSet.PlayerView.Value.SetMusic(holder, e.Difficulty);
                 CurrentSet.PlayerView.Value.Finished += Value_Finished;
                 FadeIn();
             });
@@ -130,10 +128,12 @@ namespace NotesPlayer
                 CurrentSet.ResultView.Value.SetScore(e.Score, combo, pc, gc, hc, fc);
                 SetView(CurrentSet.ResultView.Value);
 
+                var diff = (Difficulty)Navigate.Parameters[Constants.NavDifficulty];
+                var holder = (MusicHolder)Navigate.Parameters[Constants.NavMusicKey];
                 var res = new Ranking.Result()
                 {
-                    Difficulty = (Difficulty)Navigate.Parameters[Constants.NavDifficulty],
-                    SgSongFile = System.IO.Path.GetFileName((string)Navigate.Parameters[Constants.NavMusicFileKey]),
+                    Difficulty = diff,
+                    SgSongFile = holder.GetMusicPath(diff),
                     Score = e.Score,
                     UserName = (string)Navigate.Parameters[Constants.NavUserNameKey],
                     Registered = DateTime.Now,

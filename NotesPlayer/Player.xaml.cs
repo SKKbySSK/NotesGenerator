@@ -56,11 +56,12 @@ namespace NotesPlayer
         {
         }
 
-        public void SetMusic(string Directory, SugaEngine.Music Music, Difficulty Difficulty)
+        public void SetMusic(MusicHolder holder, Difficulty difficulty)
         {
             Navigate.Parameters[Constants.NavComboKey] = 0;
             Image img = null;
-            switch (Difficulty)
+            SugaEngine.Music music = holder.GetMusic(difficulty);
+            switch (difficulty)
             {
                 case Difficulty.Easy:
                     img = (Image)Resources["EasyI"];
@@ -87,15 +88,15 @@ namespace NotesPlayer
                 player = null;
             }
 
-            double score = (double)Constants.MaximumScore / Music.Notes.Count;
+
+            double score = (double)Constants.MaximumScore / music.Notes.Count;
             perfectScore = score * Constants.Perfect;
             greatScore = score * Constants.Great;
             hitScore = score * Constants.Hit;
 
             try
             {
-                player = new MusicPlayer(Directory,
-                    Music, new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 10));
+                player = new MusicPlayer(holder.MusicFile, music, new NAudio.Wave.WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 10));
 
                 System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
                 timer.Interval = TimeSpan.FromMilliseconds(1000);
@@ -115,7 +116,7 @@ namespace NotesPlayer
                 MessageBox.Show(ex.Message);
                 return;
             }
-            SongL.Content = Music.Title;
+            SongL.Content = music.Title;
             player.PlaybackStateChanged += Player_PlaybackStateChanged;
             Dropper.NotesDispenser = player;
             player.Play();

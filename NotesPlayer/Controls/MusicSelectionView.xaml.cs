@@ -18,14 +18,12 @@ namespace NotesPlayer.Controls
 {
     public class SelectedEventArgs : EventArgs
     {
-        public SelectedEventArgs(string SgSong, Music Music)
+        public SelectedEventArgs(MusicHolder music)
         {
-            this.Music = Music;
-            SgSongPath = SgSong;
+            Music = music;
         }
 
-        public string SgSongPath { get; }
-        public Music Music { get; }
+        public MusicHolder Music { get; set; }
     }
 
     /// <summary>
@@ -33,27 +31,52 @@ namespace NotesPlayer.Controls
     /// </summary>
     public partial class MusicSelectionView : UserControl
     {
-        class MusicItem
-        {
-            public MusicItem(string SgFilePath)
-            {
-                Music = SugaEngine.Export.Notes.Deserialize(SgFilePath);
-                SgSongPath = SgFilePath;
-            }
-
-            public string SgSongPath { get; }
-            public Music Music { get; }
-        }
-
         public event EventHandler<SelectedEventArgs> MusicSelected;
-        MusicItem current;
-        MusicItem Song1i = new MusicItem(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\BeforeTheLive\Before The Live.sgsong");
-        MusicItem Song2i = new MusicItem(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\アリス　アイリス\アリス　アイリス.sgsong");
+        MusicHolder current;
         AudioPlayer player;
 
         public MusicSelectionView()
         {
             InitializeComponent();
+
+            string directory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            System.IO.Directory.CreateDirectory(directory);
+
+            foreach(var musicDir in System.IO.Directory.EnumerateDirectories(directory))
+            {
+                string musicName = System.IO.Path.GetFileName(musicDir);
+                string easy = System.IO.Path.Combine(musicDir, "easy.sgsong");
+                string normal = System.IO.Path.Combine(musicDir, "normal.sgsong");
+                string hard = System.IO.Path.Combine(musicDir, "hard.sgsong");
+
+                try
+                {
+                    var cell = new MusicCell()
+                    {
+                        Music = new MusicHolder(easy, normal, hard)
+                    };
+                    cell.MouseLeftButtonDown += Cell_MouseLeftButtonDown;
+                    songsParent.Children.Add(cell);
+                }
+                catch(System.IO.FileNotFoundException ex)
+                {
+                    var name = System.IO.Path.GetFileName(ex.FileName);
+                    MessageBox.Show($"次のファイルが見つかりませんでした。\n{name}\n以下の楽曲データは無視されます\n{musicName}\n\n\n" +
+                        $"フォルダ構造を確認してください\nData/{musicName}/\n" + 
+                        $"\teasy.sgsong\n\tnormal.sgsong\n\thard.sgsong\n\t{musicName}.任意の音楽拡張子");
+                }
+            }
+        }
+
+        private void Cell_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var cell = (MusicCell)sender;
+            cell.Background = (Brush)Resources["SelectedBrush"];
+            cell.Background = (Brush)Resources["DefaultBrush"];
+            current = cell.Music;
+
+            InitPlayer(current.MusicFile);
+            player.Play(TimeSpan.FromMilliseconds(3000), TimeSpan.FromMilliseconds(10000));
         }
 
         private void ImageButton_Clicked(object sender, EventArgs e)
@@ -63,28 +86,8 @@ namespace NotesPlayer.Controls
                 if (player != null)
                     player.Dispose();
 
-                MusicSelected?.Invoke(this, new SelectedEventArgs(current.SgSongPath, current.Music));
+                MusicSelected?.Invoke(this, new SelectedEventArgs(current));
             }
-        }
-
-        private void Song2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Song2.Background = (Brush)Resources["SelectedBrush"];
-            Song1.Background = (Brush)Resources["DefaultBrush"];
-            current = Song2i;
-
-            InitPlayer(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\アリス　アイリス\アリス　アイリス.mp3");
-            player.Play(TimeSpan.FromMilliseconds(3000), TimeSpan.FromMilliseconds(10000));
-        }
-
-        private void Song1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Song1.Background = (Brush)Resources["SelectedBrush"];
-            Song2.Background = (Brush)Resources["DefaultBrush"];
-            current = Song1i;
-
-            InitPlayer(AppDomain.CurrentDomain.BaseDirectory + @"Fumen\BeforeTheLive\Before The Live.wav");
-            player.Play(TimeSpan.FromMilliseconds(3000), TimeSpan.FromMilliseconds(10000));
         }
 
         void InitPlayer(string Path)
