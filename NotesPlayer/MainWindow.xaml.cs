@@ -32,6 +32,7 @@ namespace NotesPlayer
                 diff.FontSize = 40;
                 return diff;
             });
+            public Lazy<DemoPlayer> DemoPlayerView { get; } = new Lazy<DemoPlayer>();
             public Lazy<Player> PlayerView { get; } = new Lazy<Player>();
             public Lazy<Controls.ResultView> ResultView { get; } = new Lazy<Controls.ResultView>();
             public Lazy<Controls.RankingView> RankingView { get; } = new Lazy<Controls.RankingView>();
@@ -102,15 +103,28 @@ namespace NotesPlayer
         private void Value_Ready(object sender, Controls.DifficultyEventArgs e)
         {
             CurrentSet.DifficultyView.Value.Ready -= Value_Ready;
+            FadeOut(() =>
+            {
+                CurrentSet.DemoPlayerView.Value.Completed += Value_Completed;
+                SetView(CurrentSet.DemoPlayerView.Value);
+                FadeIn();
+            });
+        }
 
+        private void Value_Completed(object sender, EventArgs e)
+        {
+            CurrentSet.DemoPlayerView.Value.Completed -= Value_Completed;
             AudioPlayer.FadeOut(500);
             FadeOut(() =>
             {
                 AudioPlayer.Pause();
                 CurrentSet.ReadyToPlay();
                 SetView(CurrentSet.PlayerView.Value);
+                var diff = (Difficulty)Navigate.Parameters[Constants.NavDifficulty];
                 var holder = (MusicHolder)Navigate.Parameters[Constants.NavMusicKey];
-                CurrentSet.PlayerView.Value.SetMusic(holder, e.Difficulty);
+                var duration = (TimeSpan)Navigate.Parameters[Constants.NavDurationKey];
+                CurrentSet.PlayerView.Value.Duration = duration;
+                CurrentSet.PlayerView.Value.SetMusic(holder, diff);
                 CurrentSet.PlayerView.Value.Finished += Value_Finished;
                 FadeIn();
             });

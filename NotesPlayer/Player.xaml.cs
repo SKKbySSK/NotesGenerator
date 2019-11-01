@@ -43,6 +43,13 @@ namespace NotesPlayer
         }
         
         public ReactiveProperty<int> Combo { get; } = new ReactiveProperty<int>(0);
+
+        public TimeSpan Duration 
+        {
+            get => Dropper.Duration;
+            set => Dropper.Duration = value;
+        }
+
         private List<(NoteJudgement, SugaEngine.Note)> JudgedList { get; } = new List<(NoteJudgement, SugaEngine.Note)>();
         double actScore { get; set; } = 0;
 

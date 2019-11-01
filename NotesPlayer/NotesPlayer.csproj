@@ -113,6 +113,9 @@
     <Compile Include="Controls\StartupView.xaml.cs">
       <DependentUpon>StartupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DemoPlayer.xaml.cs">
+      <DependentUpon>DemoPlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Difficulty.cs" />
     <Compile Include="MusicHolder.cs" />
     <Compile Include="Ranking\Result.cs" />
@@ -180,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\StartupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DemoPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

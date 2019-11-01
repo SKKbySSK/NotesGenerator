@@ -1,0 +1,18 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotesPlayer"
+             xmlns:Controls="clr-namespace:NotesPlayer.Controls" x:Class="NotesPlayer.DemoPlayer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Image x:Name="image" Stretch="UniformToFill"/>
+        <local:NotesDropper x:Name="Dropper" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Controls:ImageButton HorizontalAlignment="Right" Height="100" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="100" Image="Resources/next-page.png" Clicked="ImageButton_Clicked"/>
+        <Slider x:Name="speedS" VerticalAlignment="Top" HorizontalAlignment="Center" Width="482" VerticalContentAlignment="Center" Margin="0,50,0,0" Value="10" Maximum="15" SmallChange="1" Minimum="1" Height="26" IsSnapToTickEnabled="True" ValueChanged="SpeedS_ValueChanged"/>
+        <Label HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="20" Content="{Binding ElementName=speedS, Path=Value}" Foreground="White"/>
+        <Label Content="速度調節" HorizontalAlignment="Center" Margin="0,0,0,20" FontSize="20" VerticalAlignment="Bottom"/>
+    </Grid>
+</UserControl>
